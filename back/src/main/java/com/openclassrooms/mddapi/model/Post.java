@@ -2,14 +2,12 @@ package com.openclassrooms.mddapi.model;
 
 import java.time.LocalDateTime;
 
-import javax.security.auth.Subject;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,15 +25,13 @@ public class Post {
 
     private String title;
 
-    @Column(name="subjectid")
-    private Long subjectId;
-    @JoinColumn(name="subjectid", insertable=false, updatable=false)
-    private Subject subject;
+    @ManyToOne
+    @JoinColumn(name="topicid", insertable=false, updatable=false)
+    private Topic topic;
 
     private String content;
 
-    @Column(name="userid")
-    private Long userId;
+    @ManyToOne
     @JoinColumn(name="userid", insertable=false, updatable=false)
     private User user;
 

@@ -7,20 +7,22 @@ import com.openclassrooms.mddapi.model.User;
 @Component
 public class UserMapper {
     public UserDto toDto(User user) {
-        return UserDto.builder()
-            .id(user.getId())
-            .email(user.getEmail())
-            .password(user.getPassword())
-            .username(user.getUsername())
-            .build();
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        userDto.setUsername(user.getUsername());
+        
+        return userDto;
     }
     
     public User toEntity(UserDto userDto) {
-        return User.builder()
-            .id(userDto.getId())
-            .email(userDto.getEmail())
-            .password(userDto.getPassword())
-            .username(userDto.getUsername())
-            .build();
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setUsername(userDto.getUsername());
+        
+        return user;
     }
 }
