@@ -3,6 +3,9 @@ package com.openclassrooms.mddapi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +17,13 @@ import com.openclassrooms.mddapi.util.JWTUtils;
 import com.openclassrooms.mddapi.util.StringUtils;
 
 @Service
-public class UserService {
+public class UserService  implements UserDetailsService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private JWTUtils jwtUtils;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     
 
     public ResponseEntity<UserDto> getUserInfo(String authorizationHeader) {
@@ -33,14 +34,18 @@ public class UserService {
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Get the user by email from the repo / Return an exception if not found
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
     public ResponseEntity<UserDto> signUp(UserDto userDto) {
         UserDto response = new UserDto();
         try {
             checkRegisterInformations(userDto);
             User user = userMapper.toEntity(userDto);
 
-            String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-            user.setPassword(encodedPassword);
             userRepository.save(user);
 
             if(user.getId() > 0) {
@@ -62,6 +67,21 @@ public class UserService {
            response.setError(e.getMessage());
            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<UserDto> signIn(UserDto userDto) {
+        UserDto response = new UserDto();
+        //checkBodyPayloadErrors(bindingResult);
+
+        User user = userRepository.findByEmail(userDto.getEmail()).orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+
+        response = userMapper.toDto(user);
+
+        String jwtToken = jwtUtils.generateToken(user.getEmail());
+
+        response.setToken(jwtToken);
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

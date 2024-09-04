@@ -7,6 +7,7 @@ import java.util.function.Function;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -54,7 +55,7 @@ public class JWTUtils {
     }
 
     // Extract all the claims from the JWT
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         try {
             return Jwts.parser()
                 .verifyWith((SecretKey) getSignKey()) // Utilise la clé pour vérifier la signature du token.
@@ -68,14 +69,14 @@ public class JWTUtils {
     }
 
     // Check if the JWT Token is valid by comparing with the extracted username and checking the expiration
-    public boolean isTokenValid(String token, String username) {
-        final String extractedUsername = extractUsername(token);
-        return (extractedUsername.equals(username) && !isTokenExpired(token));
-
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
     // Check it the JWT token is expired
     public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        return extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
     // Extract expiration date from the token

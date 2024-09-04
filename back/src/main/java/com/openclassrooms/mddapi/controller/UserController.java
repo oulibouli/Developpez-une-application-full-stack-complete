@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity<UserDto> getUserInfo(@RequestHeader("Authorization") String authorizationHeader) {
-        
+        System.out.println(authorizationHeader);
         return userService.getUserInfo(authorizationHeader);
     }
     
