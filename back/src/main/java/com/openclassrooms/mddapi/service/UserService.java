@@ -23,27 +23,45 @@ public class UserService {
     private JWTUtils jwtUtils;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
 
-    public ResponseEntity<UserDto> getUserInfo() {
-        return userRepository.findById(1L)
+    public ResponseEntity<UserDto> getUserInfo(String authorizationHeader) {
+        String email = verifyUserValidityFromToken(authorizationHeader);
+
+        return userRepository.findByEmail(email)
             .map(user -> ResponseEntity.ok(userMapper.toDto(user)))
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     public ResponseEntity<UserDto> signUp(UserDto userDto) {
         UserDto response = new UserDto();
-        checkRegisterInformations(userDto);
-        User user = userMapper.toEntity(userDto);
+        try {
+            checkRegisterInformations(userDto);
+            User user = userMapper.toEntity(userDto);
 
-        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-        user.setPassword(encodedPassword);
-        userRepository.save(user);
+            String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
 
-        if(user.getId() > 0) {
-            response = userMapper.toDto(user);
-            String jwt = jwtUtils.generateToken(user.getEmail());
-            response.setToken(jwt);
+            if(user.getId() > 0) {
+                response = userMapper.toDto(user);
+                String jwt = jwtUtils.generateToken(user.getEmail());
+                response.setToken(jwt);
+            }
         }
+        catch (IllegalArgumentException e) {
+            // Return bad request if there is an illegal argument
+           response.setError(e.getMessage());
+           return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+       }catch (IllegalStateException e) {
+           // Return conflict if the user already exists
+           response.setError(e.getMessage());
+           return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+       } catch (Exception e) {
+           // Handle any other exceptions by setting the error details in the response
+           response.setError(e.getMessage());
+           return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+       }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -56,5 +74,13 @@ public class UserService {
         if(userRepository.existsByEmail(userDto.getEmail())) {
             throw new IllegalStateException("A user with this email already exists.");
         }
+    }
+
+
+    private String verifyUserValidityFromToken(String authorizationHeader) {
+        String jwtToken = authorizationHeader.substring(7);
+        String username = jwtUtils.extractUsername(jwtToken);
+
+        return username;
     }
 }

@@ -13,14 +13,14 @@ import com.openclassrooms.mddapi.service.UserService;
 import jakarta.validation.Valid;
 
 
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
     private UserService userService;
-  
-      
+    
     @PostMapping("/register")
     public ResponseEntity<UserDto> signUp(@Valid @RequestBody UserDto userDto) {
         return userService.signUp(userDto);

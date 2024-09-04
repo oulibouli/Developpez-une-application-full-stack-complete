@@ -6,12 +6,8 @@ import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.openclassrooms.mddapi.model.User;
-import com.openclassrooms.mddapi.service.UserService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -48,7 +44,6 @@ public class JWTUtils {
 
     // Extract the user's username from the JWT token.
     public String extractUsername(String token) {
-        System.out.println("Extracting Username from Token: " + token);
         return extractClaim(token, Claims::getSubject);
     }
 
