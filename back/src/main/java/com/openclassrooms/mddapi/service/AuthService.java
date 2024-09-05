@@ -77,8 +77,19 @@ public class AuthService {
         AuthDTO response = new AuthDTO();
         try {
             checkLoginInformations(authDTO);
+
+            String email = "";
+            if(authDTO.getIdentifier().contains("@")) {
+                email = authDTO.getIdentifier();
+            }
+            else if(StringUtils.isNullOrEmpty(authDTO.getUsername())) {
+                User checkUser = userRepository.findByUsername(authDTO.getIdentifier()).orElseThrow();
+                email = checkUser.getEmail();
+            }
+            
+
             // Authenticate the user with the provided credentials
-            Authentication authentication = authenticateUser(authDTO.getEmail(), authDTO.getPassword());
+            Authentication authentication = authenticateUser(email, authDTO.getPassword());
             // Generate a JWT token for the authenticated user
             String jwt = jwtUtil.generateToken(authentication.getName());
             // Set the response details
@@ -112,15 +123,15 @@ public class AuthService {
     }
 
     // Method to authenticate a user with the authentication manager.
-    private Authentication authenticateUser(String email, String password) {
+    private Authentication authenticateUser(String identifier, String password) {
         try {
-            // Attempts to authenticate the user with provided credentials.
+            // Tente d'authentifier l'utilisateur avec les identifiants fournis (email ou username).
             return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, password)
+                new UsernamePasswordAuthenticationToken(identifier, password)
             );
         } catch (BadCredentialsException e) {
-            // Throws an exception if authentication fails due to bad credentials.
-            throw new BadCredentialsException("Invalid email or password.");
+            // Si l'authentification échoue à cause de mauvaises informations d'identification.
+            throw new BadCredentialsException("Invalid email/username or password.");
         }
     }
 
@@ -136,8 +147,11 @@ public class AuthService {
     }
     
     private void checkLoginInformations(AuthDTOLogin authDTOLogin) {
-        if(StringUtils.isNullOrEmpty(authDTOLogin.getEmail()) || StringUtils.isNullOrEmpty(authDTOLogin.getPassword())){
-            throw new IllegalArgumentException("Password or email cannot be empty.");
+        if(StringUtils.isNullOrEmpty(authDTOLogin.getPassword())){
+            throw new IllegalArgumentException("Password cannot be empty.");
+        }
+        if(StringUtils.isNullOrEmpty(authDTOLogin.getIdentifier())){
+            throw new IllegalArgumentException("Email or username cannot be empty.");
         }
     }
 }

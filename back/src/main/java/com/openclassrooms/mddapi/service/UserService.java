@@ -30,9 +30,17 @@ public class UserService implements UserDetailsService {
     
     // Request a user by username (email)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
         // Get the user by email from the repo / Return an exception if not found
-        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Optional<User> userOpt = userRepository.findByEmail(identifier);
+        
+        // Si l'utilisateur n'a pas été trouvé par email, on tente par username
+        if (userOpt.isEmpty()) {
+            userOpt = userRepository.findByUsername(identifier);
+        }
+
+        // Si l'utilisateur n'est pas trouvé dans les deux cas, on lève une exception
+        return userOpt.orElseThrow(() -> new UsernameNotFoundException("User not found with email or username: " + identifier));
     }
 
     // Get a user by id
