@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { LoginRequest } from '../models/auth.type';
 import { UserInfo } from '../models/user.type';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { UserInfo } from '../models/user.type';
 export class AuthService {
   private api = 'http://localhost:8080/api/auth/login'
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   login(loginRequest: LoginRequest): Observable<UserInfo> {
@@ -25,6 +27,11 @@ export class AuthService {
           return throwError(() => new Error(error))
         })
       )
+  }
+
+  logout() {
+    localStorage.removeItem('token')
+    this.router.navigate(['/login'])
   }
 
   isLoggedIn(): boolean {
