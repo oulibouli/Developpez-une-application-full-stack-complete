@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -51,6 +52,7 @@ public class SecurityConfig {
         .formLogin(login -> login.disable()) // Disable the login form
         .httpBasic(basic -> basic.disable()) // Disable the HTTP basic authentication
         .authorizeHttpRequests(request -> request
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             // Define the authorization access for the URLs
             .requestMatchers(
                 "/api/auth/login",
@@ -79,27 +81,20 @@ public class SecurityConfig {
     @Bean
     CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        // Configure the authorized origins, methods and headers for the CORS.
-        config.setAllowedOrigins(List.of(corsOrigins.split(",")));
+        config.setAllowedOrigins(List.of("http://localhost:4200")); // Autoriser uniquement ce domaine
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         config.setAllowCredentials(true);
         config.addExposedHeader("Authorization");
 
-        // Configure the  CORS based on the URLs.
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
-        // Return a new CORS filter.
         return new CorsFilter(source) {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
-                // Return OK status for the OPTIONS requests
-                if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    return;
-                }
+         
                 super.doFilterInternal(request, response, filterChain);
             }
         };
