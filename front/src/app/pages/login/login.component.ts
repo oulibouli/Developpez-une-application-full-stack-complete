@@ -31,8 +31,9 @@ export class LoginComponent implements OnInit {
     this.authService.login({identifier, password}).subscribe({
       next: (response) => {
         // If succeed, redirect
-        console.log('OK');
         console.log(response);
+        this.router.navigate(['/topics'])
+        console.log(1);
       },
       error: (error) => {
         this.errorMessage = 'Identifiant ou mot de passe incorrect'
