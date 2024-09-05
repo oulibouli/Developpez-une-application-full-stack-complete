@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -8,14 +8,15 @@ import { AuthService } from 'src/app/core/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup
-  errorMessage: string | null = null
+  loginForm!: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -31,9 +32,7 @@ export class LoginComponent implements OnInit {
     this.authService.login({identifier, password}).subscribe({
       next: (response) => {
         // If succeed, redirect
-        console.log(response);
         this.router.navigate(['/topics'])
-        console.log(1);
       },
       error: (error) => {
         this.errorMessage = 'Identifiant ou mot de passe incorrect'

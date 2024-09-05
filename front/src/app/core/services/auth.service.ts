@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { LoginRequest } from '../models/auth.type';
+import { LoginRequest, RegisterRequest } from '../models/auth.type';
 import { UserInfo } from '../models/user.type';
 import { Router } from '@angular/router';
 
@@ -9,21 +9,35 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private api = 'http://localhost:8080/api/auth/login'
+  private apiLogin = 'http://localhost:8080/api/auth/login'
+  private apiRegister = 'http://localhost:8080/api/auth/register'
+  
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
   login(loginRequest: LoginRequest): Observable<UserInfo> {
-    return this.http.post<UserInfo>(this.api, loginRequest)
+    return this.http.post<UserInfo>(this.apiLogin, loginRequest)
       .pipe(
-        tap((response) => {
+        tap(response => {
           // Get the token and save it in localStorage
           localStorage.setItem('token', response.token)
         }),
         catchError((error) => {
           console.log('Login failed', error);
+          return throwError(() => new Error(error))
+        })
+      )
+  }
+
+  register(registerRequest: RegisterRequest): Observable<UserInfo> {
+    return this.http.post<UserInfo>(this.apiRegister, registerRequest)
+      .pipe(
+        tap(response => {
+          return response
+        }),
+        catchError((error) => {
           return throwError(() => new Error(error))
         })
       )

@@ -1,9 +1,5 @@
-<div class="login-container">
-    <div class="back-button">
-      <a href="/home">
-        <span class="back-icon">←</span>
-      </a>
-    </div>
+<div class="container">
+  <app-back-button></app-back-button>
     <div class="form-container">
       <h2>Se connecter</h2>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -15,11 +11,9 @@
           <label for="password">Mot de passe</label>
           <input type="password" id="password" formControlName="password" />
         </div>
-        <button type="submit" class="login-button" [disabled]="loginForm.invalid">Se connecter</button>
+        <button type="submit" class="button" [disabled]="loginForm.invalid">Se connecter</button>
       </form>
 
-      <div class="error-message" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
     </div>
 </div>

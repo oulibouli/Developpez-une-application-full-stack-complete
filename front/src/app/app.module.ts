@@ -13,16 +13,34 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { PostsComponent } from './pages/posts/posts.component';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { BackButtonComponent } from './shared/back-button/back-button.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, BannerComponent, TopicsComponent, PostsComponent],
+  declarations: [
+    AppComponent, 
+    HomeComponent, 
+    LoginComponent, 
+    RegisterComponent, 
+    BannerComponent, 
+    TopicsComponent, 
+    PostsComponent, 
+    BackButtonComponent, 
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

@@ -3,13 +3,17 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   
-  .login-container {
+  .container {
     max-width: 500px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0px auto;
+    padding: 30px;
     text-align: center;
+  }
+
+  .toolbar {
+    background-color: white; /* Toolbar blanche */
+    border-bottom: 1px solid black; /* Bordure inférieure noire */
+    color: black; /* Texte noir */
   }
   
   .header {
@@ -26,7 +30,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   
   .back-button {
     position: absolute;
-    top: 20px;
     left: 20px;
   }
   
@@ -64,7 +67,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 5px;
   }
   
-  .login-button {
+  .button {
     width: 100%;
     padding: 10px;
     background-color: #6a4bba;
@@ -76,6 +79,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     transition: background-color 0.3s ease;
   }
   
-  .login-button:hover {
+  .button:hover {
     background-color: #5b3e9f;
   }
