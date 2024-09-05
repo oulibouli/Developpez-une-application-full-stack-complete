@@ -144,6 +144,9 @@ public class AuthService {
         if(userRepository.existsByEmail(authDTORegister.getEmail())) {
             throw new IllegalStateException("A user with this email already exists.");
         }
+        if(userRepository.existsByUsername(authDTORegister.getUsername())) {
+            throw new IllegalStateException("A user with this username already exists.");
+        }
     }
     
     private void checkLoginInformations(AuthDTOLogin authDTOLogin) {
