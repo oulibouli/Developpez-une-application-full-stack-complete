@@ -21,18 +21,18 @@ import lombok.NoArgsConstructor;
 public class Post {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     private String title;
 
     @ManyToOne
-    @JoinColumn(name="topicid", insertable=false, updatable=false)
+    @JoinColumn(name="topicid")
     private Topic topic;
 
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="userid", insertable=false, updatable=false)
+    @JoinColumn(name="userid")
     private User user;
 
     private LocalDateTime date;

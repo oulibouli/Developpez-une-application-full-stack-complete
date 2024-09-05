@@ -19,7 +19,7 @@ import lombok.Data;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String email;
     private String password;
     private String role;
@@ -28,7 +28,7 @@ public class User implements UserDetails {
     // Get the authorization role for the user
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
     @Override
     public String getUsername() {

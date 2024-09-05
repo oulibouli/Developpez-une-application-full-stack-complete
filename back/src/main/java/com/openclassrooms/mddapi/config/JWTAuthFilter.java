@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.openclassrooms.mddapi.exceptions.AuthenticationFailureException;
 import com.openclassrooms.mddapi.exceptions.InvalidJwtTokenException;
 import com.openclassrooms.mddapi.service.UserService;
-import com.openclassrooms.mddapi.util.JWTUtils;
+import com.openclassrooms.mddapi.util.JwtUtil;
 import com.openclassrooms.mddapi.util.StringUtils;
 
 import jakarta.servlet.FilterChain;
@@ -28,11 +28,11 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     // Spring dependency injection for the jwt tools
     @Autowired
-    private JWTUtils jwtUtils;
+    private JwtUtil jwtUtil;
 
     // Spring dependency injection for the users service
     @Autowired
-    private UserService userService;
+    private UserService usersService;
 
     // Main method requested for each HTTP request
     @Override
@@ -67,15 +67,15 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     private void processJwtToken(String jwtToken, HttpServletRequest request) {
         // Extract the username from the JWT token
-        String userEmail = jwtUtils.extractUsername(jwtToken);
+        String userEmail = jwtUtil.extractUsername(jwtToken);
 
         // If the username is not null and the user is not authenticated
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // Load the user details
-            UserDetails userDetails = userService.loadUserByUsername(userEmail);
+            UserDetails userDetails = usersService.loadUserByUsername(userEmail);
 
             // Check if the JWT token is valid
-            if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
+            if (jwtUtil.isTokenValid(jwtToken, userDetails)) {
                 // Create an authentication token and pass it to the security
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

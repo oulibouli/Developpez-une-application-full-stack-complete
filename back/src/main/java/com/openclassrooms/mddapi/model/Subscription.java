@@ -18,14 +18,14 @@ import lombok.NoArgsConstructor;
 public class Subscription {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name="userid", insertable=false, updatable=false)
+    @JoinColumn(name="userid")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="topicid", insertable=false, updatable=false)
+    @JoinColumn(name="topicid")
     private Topic topic;
 
     @Column(name="isactive")

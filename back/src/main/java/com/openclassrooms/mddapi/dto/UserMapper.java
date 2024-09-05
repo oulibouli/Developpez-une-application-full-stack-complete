@@ -4,25 +4,19 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.model.User;
 
+// Spring-managed component.
 @Component
 public class UserMapper {
-    public UserDto toDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
-        userDto.setUsername(user.getUsername());
+
+    // Converts a Users entity to a UserDTO object.
+    public UserDTO toDTO(User user) {
+        UserDTO userDTO = new UserDTO();
         
-        return userDto;
-    }
-    
-    public User toEntity(UserDto userDto) {
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setUsername(userDto.getUsername());
+        // Mapping fields from Users entity to UserDTO.
+        userDTO.setId(user.getId());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setUsername(user.getUsername());
         
-        return user;
+        return userDTO; // Returning the created UserDTO.
     }
 }

@@ -4,8 +4,6 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
-import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -13,11 +11,12 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class JWTUtils {
+public class JwtUtil {
 
     // Inject the secret key from the properties file
     @Value("${jwt.secret}")
@@ -36,15 +35,16 @@ public class JWTUtils {
     public String generateToken(String userName) {
         // Build the JWT with the claims : Subject, Created date, expiration date and the algorythm signature
         return Jwts.builder()
-                .subject(userName)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSignKey())
-                .compact();
+                .setSubject(userName)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     // Extract the user's username from the JWT token.
     public String extractUsername(String token) {
+        System.out.println("Extracting Username from Token: " + token);
+        System.out.println(extractClaim(token, Claims::getSubject));
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -55,13 +55,13 @@ public class JWTUtils {
     }
 
     // Extract all the claims from the JWT
-    public Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token) {
         try {
-            return Jwts.parser()
-                .verifyWith((SecretKey) getSignKey()) // Utilise la clé pour vérifier la signature du token.
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSignKey()) // Définit la clé de signature pour la validation.
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
         } catch (JwtException e) {
             // Lance une exception personnalisée en cas d'erreur de validation du JWT.
             throw new JwtException("JWT validation error: " + e.getMessage());
@@ -77,11 +77,6 @@ public class JWTUtils {
     // Check it the JWT token is expired
     public boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
-    }
-
-    // Extract expiration date from the token
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
     }
 
 }
