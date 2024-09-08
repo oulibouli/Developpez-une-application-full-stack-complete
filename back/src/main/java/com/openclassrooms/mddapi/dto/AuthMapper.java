@@ -37,7 +37,7 @@ public class AuthMapper {
         AuthDTO authDTO = new AuthDTO();
         try {
             // Retrieving the Users entity by email (username) from the repository.
-            User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+            User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
             // Setting the properties of authDTO from the retrieved Users entity.
             authDTO.setId(user.getId());
             authDTO.setUsername(user.getUsername());
