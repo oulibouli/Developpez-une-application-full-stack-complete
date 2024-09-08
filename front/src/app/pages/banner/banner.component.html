@@ -1,3 +1,10 @@
 <mat-toolbar class="toolbar">
-  <img src="/assets/logo_p6.png" alt="MDD Logo" class="logo" routerLink="/" />
+  <div class="toolbar-left">
+    <img src="/assets/logo_p6.png" alt="MDD Logo" class="logo" routerLink="/" />
+  </div>
+  <div class="toolbar-right">
+    <a routerLink="/posts" routerLinkActive="active-link" class="nav-link">Articles</a>
+    <a routerLink="/topics" routerLinkActive="active-link" class="nav-link">Themes</a>
+    <mat-icon>account_circle</mat-icon>
+  </div>
 </mat-toolbar>

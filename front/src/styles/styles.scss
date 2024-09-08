@@ -82,3 +82,43 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .button:hover {
     background-color: #5b3e9f;
   }
+  .toolbar {
+    background-color: white;
+    border-bottom: 1px solid black;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espacement entre les éléments */
+    padding: 0 20px;
+  }
+  
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 100px;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 15px;
+  }
+  
+  .mat-icon {
+    color: gray;
+    vertical-align: middle;
+  }
+  .active-link {
+    font-weight: bold;
+    color: #6a4bba;
+  }
