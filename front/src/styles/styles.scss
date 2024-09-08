@@ -122,3 +122,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: bold;
     color: #6a4bba;
   }
+  .mat-form-field {
+    width: 100%; /* Les champs prendront toute la largeur du conteneur */
+  }
+  
+  .form-group {
+    display: block; 
+    margin-bottom: 20px;
+  }

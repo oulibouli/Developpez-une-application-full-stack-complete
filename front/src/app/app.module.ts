@@ -18,6 +18,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MeComponent } from './pages/me/me.component';
+import { MatCardModule } from '@angular/material/card'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+
 
 @NgModule({
   declarations: [
@@ -29,6 +33,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     TopicsComponent, 
     PostsComponent, 
     BackButtonComponent, 
+    MeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

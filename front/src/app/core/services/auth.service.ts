@@ -12,7 +12,7 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
   private apiLogin = 'http://localhost:8080/api/auth/login'
   private apiRegister = 'http://localhost:8080/api/auth/register'
-  private apiTokenExpiration = 'http://localhost:8080/api/auth/tokenexpiration'
+  private apiMe = 'http://localhost:8080/api/auth/me'
   
   constructor(
     private http: HttpClient,
@@ -26,7 +26,7 @@ export class AuthService {
           // Get the token and save it in localStorage
           localStorage.setItem('token', response.token)
         }),
-        catchError((error) => {
+        catchError(error => {
           console.log('Login failed', error);
           return throwError(() => new Error(error))
         })
@@ -39,10 +39,22 @@ export class AuthService {
         tap(response => {
           return response
         }),
-        catchError((error) => {
+        catchError(error => {
           return throwError(() => new Error(error))
         })
       )
+  }
+
+  userInfos(): Observable<UserInfo> {
+    return this.http.get<UserInfo>(this.apiMe)
+    .pipe(
+      tap(response => {
+        return response        
+      }),
+      catchError(error => {
+        return throwError(() => new Error(error))
+      })
+    )
   }
 
   isTokenExpired(token: string): boolean {
