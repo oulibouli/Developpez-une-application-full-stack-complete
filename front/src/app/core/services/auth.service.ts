@@ -4,6 +4,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { LoginRequest, RegisterRequest } from '../models/auth.type';
 import { UserInfo } from '../models/user.type';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private apiLogin = 'http://localhost:8080/api/auth/login'
   private apiRegister = 'http://localhost:8080/api/auth/register'
+  private apiTokenExpiration = 'http://localhost:8080/api/auth/tokenexpiration'
   
   constructor(
     private http: HttpClient,
@@ -41,6 +43,14 @@ export class AuthService {
           return throwError(() => new Error(error))
         })
       )
+  }
+
+  isTokenExpired(token: string): boolean {
+    const decodedToken: any = jwtDecode(token);
+    const expirationDate = decodedToken.exp * 1000
+    const currentDate = new Date().getTime()
+    
+    return currentDate > expirationDate
   }
 
   logout() {
