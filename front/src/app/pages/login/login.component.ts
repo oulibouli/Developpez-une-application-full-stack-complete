@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.authService.login({identifier, password}).subscribe({
       next: (response) => {
         // If succeed, redirect
-        this.router.navigate(['/topics'])
+        this.router.navigate(['/posts'])
       },
       error: (error) => {
         this.errorMessage = 'Identifiant ou mot de passe incorrect'

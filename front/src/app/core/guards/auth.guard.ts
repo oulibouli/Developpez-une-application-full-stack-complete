@@ -14,13 +14,25 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-    ): boolean | UrlTree {      
-      if (this.authService.isLoggedIn()) {
-        return true;
+    ): boolean | UrlTree {
+      console.log(state.url);
+      
+      const publicRoutes = ["/login", "/register", "/"]
+      const isOnRoute = publicRoutes.includes(state.url)
+      const isLogged = this.authService.isLoggedIn()      
+
+      if(isOnRoute && isLogged) {
+        // If public route and logged in, redirect
+        return this.router.createUrlTree(['/posts']);
       }
-      // Redirect the user if not connected
-      this.router.navigate(['/login']);
-      return false;
+      
+      if (!isOnRoute && !isLogged) {
+        // If private route and not logged in, redirect
+        return this.router.createUrlTree(['']);
+      }
+      else {      
+        return true
+      }
     }
   
 }

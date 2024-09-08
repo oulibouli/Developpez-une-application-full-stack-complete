@@ -21,9 +21,7 @@ export class AppComponent implements OnInit{
   private checkTokenExpiration(): void {
     let token = localStorage.getItem('token')
     if(token !== null) {
-      const expired = this.authService.isTokenExpired(token)
-      console.log(expired);
-      
+      const expired = this.authService.isTokenExpired(token)      
       if(expired) {
         localStorage.removeItem('token')
       }

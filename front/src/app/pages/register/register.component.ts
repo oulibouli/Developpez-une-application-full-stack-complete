@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register({email, username, password}).subscribe({
       next: (response => {
         // If succeed, redirect
-        this.router.navigate(['/topics'])
+        this.router.navigate(['/posts'])
       }),
       error: (error => {
         this.errorMessage = error
