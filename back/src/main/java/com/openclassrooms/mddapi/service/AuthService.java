@@ -1,5 +1,8 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.openclassrooms.mddapi.dto.AuthDTO;
 import com.openclassrooms.mddapi.dto.AuthDTOLogin;
@@ -119,6 +123,22 @@ public class AuthService {
             // Handle any other exceptions by setting the error details in the response
             response.setError(e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Map<String, Object>> updateUserProfile(UserDetails userDetails, AuthDTO authDTO) {   
+        try {
+        User user = userRepository.findByUsername(userDetails.getUsername())
+            .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + authDTO.getEmail()));
+    
+            user.setEmail(authDTO.getEmail());
+            user.setUsername(authDTO.getUsername());
+            userRepository.save(user);
+    
+            return ResponseEntity.ok(Collections.singletonMap("message", "User updated successfully!"));
+    
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating user: " + e.getMessage());
         }
     }
 
