@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
      
       const publicRoutes = ["/login", "/register", "/"]
       const isOnRoute = publicRoutes.includes(state.url)
-      const isLogged = this.authService.isLoggedIn()      
+      const isLogged = this.authService.isLoggedIn()            
 
       if(isOnRoute && isLogged) {
         // If public route and logged in, redirect

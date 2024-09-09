@@ -1,20 +1,18 @@
-<mat-card *ngIf="userInfo" class="user-card">
-    <mat-card-header>
-      <div mat-card-avatar class="user-icon">
-        <mat-icon>account_circle</mat-icon>
-      </div>
-      <mat-card-title>{{ userInfo.username }}</mat-card-title>
-      <mat-card-subtitle>{{ userInfo.email }}</mat-card-subtitle>
-    </mat-card-header>
-    
-    <mat-card-content>
-      <p><strong>Rôle :</strong> {{ userInfo.role }}</p>
-      <!-- Tu peux ajouter d'autres informations ici -->
-    </mat-card-content>
-  </mat-card>
-  
-  <!-- Spinner de chargement -->
-  <div *ngIf="!userInfo" class="loading-spinner">
-    <mat-spinner></mat-spinner>
-    <p>Chargement des informations...</p>
+<div class="container">
+  <app-back-button></app-back-button>
+  <div class="form-container" *ngIf="userInfo">
+      <h2>Profil utilisateur</h2>
+      <form [formGroup]="meForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <input type="text" id="username" formControlName="username">
+          </div>
+          <div class="form-group">
+              <input type="email" id="email" formControlName="email">
+          </div>
+          <button mat-stroked-button class="button" type="submit" [disabled]="meForm.invalid">
+            Sauvegarder
+          </button>
+          <button mat-button color="warn" id="buttonLogout" (click)="logout()">Se déconnecter</button>
+      </form>
+  </div>
 </div>

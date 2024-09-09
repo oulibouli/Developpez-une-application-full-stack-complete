@@ -7,3 +7,7 @@ export type RegisterRequest = {
     username: string
     password: string
 }
+export type UpdateRequest = {
+    email: string
+    username: string
+}

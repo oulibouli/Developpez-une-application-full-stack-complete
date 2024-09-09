@@ -2,9 +2,9 @@
   <div class="toolbar-left">
     <img src="/assets/logo_p6.png" alt="MDD Logo" class="logo" routerLink="/" />
   </div>
-  <div class="toolbar-right">
+  <div class="toolbar-right" *ngIf="isLogged">
     <a routerLink="/posts" routerLinkActive="active-link" class="nav-link">Articles</a>
     <a routerLink="/topics" routerLinkActive="active-link" class="nav-link">Themes</a>
-    <mat-icon routerLink="/me">account_circle</mat-icon>
+    <mat-icon routerLink="/me" routerLinkActive="active-link">account_circle</mat-icon>
   </div>
 </mat-toolbar>
