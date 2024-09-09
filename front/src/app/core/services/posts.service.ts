@@ -7,14 +7,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PostsService {
-  private apiPosts = 'http://localhost:8080/api/post'
+  private apiPosts = 'http://localhost:8080/api/posts'
 
   constructor(
     private http: HttpClient
   ) {}
 
-  getAllPosts():Observable<Post> {
-    return this.http.get<Post>(this.apiPosts)
+  getAllPosts():Observable<Post[]> {
+    return this.http.get<Post[]>(this.apiPosts)
       .pipe(
         tap((response) => {
           return response

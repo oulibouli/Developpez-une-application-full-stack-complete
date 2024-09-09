@@ -4,12 +4,13 @@ export type Post = {
     topic:string
     content:string
     date:string
-    authorName:string
+    author:string
     comments: UserComment[]
 }
 
 export type UserComment = {
-    username: string
-    comment: string
+    id:number
+    author: string
+    description: string
     date: string
 }

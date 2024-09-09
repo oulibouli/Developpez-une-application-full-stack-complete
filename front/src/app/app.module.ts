@@ -20,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MeComponent } from './pages/me/me.component';
 import { MatCardModule } from '@angular/material/card'; 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PostDetailComponent } from './pages/post-detail/post-detail.component'; 
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     TopicsComponent, 
     PostsComponent, 
     BackButtonComponent, 
-    MeComponent
+    MeComponent, PostDetailComponent
   ],
   imports: [
     BrowserModule,
