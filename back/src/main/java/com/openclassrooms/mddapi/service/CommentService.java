@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.openclassrooms.mddapi.dto.CommentDTO;
 import com.openclassrooms.mddapi.dto.CommentDTOCreate;
+import com.openclassrooms.mddapi.dto.CommentMapper;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
@@ -28,6 +29,8 @@ public class CommentService {
     private PostRepository postRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private CommentMapper commentMapper;
 
     public ResponseEntity<CommentDTO> createComment(CommentDTOCreate commentDTOCreate, int postId, UserDetails userDetails) {
         try {
@@ -44,12 +47,7 @@ public class CommentService {
                 Comment savedComment = commentRepository.save(comment);
 
                 // Convertir l'entité Comment en CommentDTO
-                CommentDTO commentDTO = new CommentDTO();
-                commentDTO.setId(savedComment.getId());
-                commentDTO.setDescription(savedComment.getDescription());
-                commentDTO.setDate(savedComment.getDate());
-                commentDTO.setAuthor(user.getEmail());
-                commentDTO.setPostTitle(post.getTitle());
+                CommentDTO commentDTO = commentMapper.toDto(savedComment, user, post);
 
                 return new ResponseEntity<>(commentDTO, HttpStatus.OK);
             }

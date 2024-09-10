@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -41,5 +42,5 @@ public class Post {
     private LocalDateTime date;
 
     @OneToMany(mappedBy = "post", cascade=CascadeType.ALL)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 }

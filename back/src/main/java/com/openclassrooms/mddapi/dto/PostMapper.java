@@ -32,4 +32,13 @@ public class PostMapper {
 
         return postDTO;
     }
+
+    public Post toEntity(PostDTOCreate postDTO) {
+        Post post = new Post();
+        post.setContent(postDTO.getContent());
+        post.setDate(postDTO.getDate());
+        post.setTitle(postDTO.getTitle());
+
+        return post;
+    }
 }
