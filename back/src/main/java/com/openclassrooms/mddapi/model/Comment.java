@@ -2,8 +2,6 @@ package com.openclassrooms.mddapi.model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,13 +23,12 @@ public class Comment {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="postid")
-    @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(name = "postid", nullable = false)
     private Post post;
 
-    @ManyToOne
-    @JoinColumn(name="userid")
+    @ManyToOne()
+    @JoinColumn(name = "userid", nullable = false)
     private User user;
 
     private LocalDateTime date;

@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class CommentDTO {
+public class CommentDTOCreate {
     private int id;
-    private String author;
+    private int authorId;
     private String description;
     private LocalDateTime date;
-    private String postTitle;  // Au lieu de l'objet Post complet
+    private int postId;
 }

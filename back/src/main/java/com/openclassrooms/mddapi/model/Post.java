@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,18 +28,18 @@ public class Post {
 
     private String title;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="topicid")
     private Topic topic;
 
     private String content;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="userid")
     private User user;
 
     private LocalDateTime date;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade=CascadeType.ALL)
     private List<Comment> comments;
 }
