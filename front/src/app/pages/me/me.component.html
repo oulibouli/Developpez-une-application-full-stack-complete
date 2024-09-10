@@ -1,18 +1,23 @@
 <div class="container">
   <app-back-button></app-back-button>
   <div class="form-container" *ngIf="userInfo">
-      <h2>Profil utilisateur</h2>
-      <form [formGroup]="meForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-              <input type="text" id="username" formControlName="username">
-          </div>
-          <div class="form-group">
-              <input type="email" id="email" formControlName="email">
-          </div>
-          <button mat-stroked-button class="button" type="submit" [disabled]="meForm.invalid">
-            Sauvegarder
-          </button>
-          <button mat-button color="warn" id="buttonLogout" (click)="logout()">Se déconnecter</button>
-      </form>
+    <h2>Profil utilisateur</h2>
+    <form [formGroup]="meForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput type="text" id="username" formControlName="username">
+      </mat-form-field>
+
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" id="email" formControlName="email">
+      </mat-form-field>
+
+      <button mat-stroked-button class="button" type="submit" [disabled]="meForm.invalid">
+        Sauvegarder
+      </button>
+
+      <button mat-button color="warn" id="buttonLogout" (click)="logout()">Se déconnecter</button>
+    </form>
   </div>
 </div>

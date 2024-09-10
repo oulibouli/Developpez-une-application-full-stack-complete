@@ -43,9 +43,6 @@ export class AuthService {
   register(registerRequest: RegisterRequest): Observable<UserInfo> {
     return this.http.post<UserInfo>(this.apiRegister, registerRequest)
       .pipe(
-        tap(response => {
-          return response
-        }),
         catchError(error => {
           return throwError(() => new Error(error))
         })
@@ -55,9 +52,6 @@ export class AuthService {
   userInfos(): Observable<UserInfo> {
     return this.http.get<UserInfo>(this.apiMe)
     .pipe(
-      tap(response => {
-        return response        
-      }),
       catchError(error => {
         return throwError(() => new Error(error))
       })

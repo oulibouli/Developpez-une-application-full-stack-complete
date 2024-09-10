@@ -1,7 +1,7 @@
 export type Post = {
     id:number
     title:string
-    topic:string
+    topicName:string
     content:string
     date:string
     author:string
@@ -11,6 +11,12 @@ export type Post = {
 export type UserComment = {
     id:number
     author: string
+    description: string
+    date: string
+    postTitle: string
+}
+
+export type CreateComment = {
     description: string
     date: string
 }

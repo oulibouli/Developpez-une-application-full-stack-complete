@@ -8,7 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { BannerComponent } from './pages/banner/banner.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { PostsComponent } from './pages/posts/posts.component';
@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MeComponent } from './pages/me/me.component';
 import { MatCardModule } from '@angular/material/card'; 
+import { MatDividerModule } from '@angular/material/divider'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component'; 
 
@@ -34,7 +35,8 @@ import { PostDetailComponent } from './pages/post-detail/post-detail.component';
     TopicsComponent, 
     PostsComponent, 
     BackButtonComponent, 
-    MeComponent, PostDetailComponent
+    MeComponent,
+    PostDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,9 @@ import { PostDetailComponent } from './pages/post-detail/post-detail.component';
     HttpClientModule,
     MatToolbarModule,
     MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
