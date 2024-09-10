@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class PostsService {
   private apiPosts = 'http://localhost:8080/api/posts'
   private apiComment = 'http://localhost:8080/api/comment'
+  private apiCreatePost = 'http://localhost:8080/api/posts'
 
   constructor(
     private http: HttpClient
@@ -32,12 +33,21 @@ export class PostsService {
       )
   }
 
-  addComment(comment: CreateComment, postId: number): Observable<UserComment> {
+  addComment(comment: Partial<CreateComment>, postId: number): Observable<UserComment> {
     return this.http.post<UserComment>(`${this.apiComment}/${postId}`, comment)
     .pipe(
       catchError(error => {
         return throwError(() => new Error(error))
-      }) 
+      })
+    )
+  }
+
+  createPost(post: Partial<Post>, topicId: number): Observable<Post> {
+    return this.http.post<Post>(`${this.apiCreatePost}/${topicId}`, post)
+    .pipe(
+      catchError(error => {
+        return throwError(() => new Error(error))
+      })
     )
   }
 }

@@ -154,10 +154,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
   
   .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espace entre les cartes */
+    justify-content: space-between;
+    padding: 20px; /* Espace autour de la grille */
+  }
+  
+  .post-card {
+    flex: 1 1 300px; /* Largeur minimale de chaque carte */
+    margin: 10px; /* Ajuste cet espace si besoin */
   }
   
   .post-card {
@@ -193,4 +199,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex-grow: 1;
     padding-left: 20px; /* Ajoute un espace entre la colonne de gauche et le contenu */
     margin-right: 50px;
+  }
+
+  .success {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  #message {
+    padding: 5%;
   }

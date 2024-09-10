@@ -18,6 +18,6 @@
             <button type="submit" class="button" [disabled]="registerForm.invalid">S'inscrire</button>
         </form>
 
-        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+        <div *ngIf="message" [ngClass]="messageClass" id="message">{{ message }}</div>
     </div>
 </div>

@@ -10,7 +10,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm!:FormGroup;
-  errorMessage: string | null = null;
+  message: string = '';
+  messageClass: string = ''
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,12 +31,10 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.invalid) return;
     const { email, username, password } = this.registerForm.value
     this.authService.register({email, username, password}).subscribe({
-      next: (response => {
-        // If succeed, redirect
-        this.router.navigate(['/posts'])
-      }),
+      next: (() => this.router.navigate(['/posts'])),
       error: (error => {
-        this.errorMessage = error
+        this.message = error
+        this.messageClass = 'error'
       })
     })
   }

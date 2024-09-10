@@ -11,7 +11,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  errorMessage: string | null = null;
+  message: string = '';
+  messageClass: string = ''
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,12 +31,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) return;
     const { identifier, password } = this.loginForm.value
     this.authService.login({identifier, password}).subscribe({
-      next: (response) => {
+      next: () => {
         // If succeed, redirect
         this.router.navigate(['/posts'])
       },
-      error: (error) => {
-        this.errorMessage = 'Identifiant ou mot de passe incorrect'
+      error: () => {
+        this.message = 'Identifiant ou mot de passe incorrect'
+        this.messageClass= 'error'
       }
     })
   }

@@ -1,0 +1,27 @@
+<div class="container">
+    <app-back-button></app-back-button>
+    <div class="form-container">
+        <h2>Créer un nouvel article</h2>
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-group" appearance="outline">
+                <mat-select placeholder="Sélectionner un thème" formControlName="topic">
+                    <mat-option *ngFor="let topic of topics" [value]="topic.id">{{ topic.title }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field class="form-group" appearance="outline">
+                <input matInput type="text" id="title" formControlName="title" placeholder="Titre de l'article">
+            </mat-form-field>
+
+            <mat-form-field class="form-group" appearance="outline">
+                <input matInput type="text" id="content" formControlName="content" placeholder="Contenu de l'article">
+            </mat-form-field>
+    
+            <button mat-stroked-button class="button" type="submit" [disabled]="createForm.invalid">
+            Créer
+            </button>
+        </form>
+
+        <div *ngIf="message" [ngClass]="messageClass" id="message">{{ message }}</div>
+    </div>
+</div>

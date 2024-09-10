@@ -21,8 +21,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MeComponent } from './pages/me/me.component';
 import { MatCardModule } from '@angular/material/card'; 
 import { MatDividerModule } from '@angular/material/divider'; 
+import { MatSelectModule } from '@angular/material/select'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PostDetailComponent } from './pages/post-detail/post-detail.component'; 
+import { PostDetailComponent } from './pages/post-detail/post-detail.component';
+import { PostCreateComponent } from './pages/post-create/post-create.component'; 
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { PostDetailComponent } from './pages/post-detail/post-detail.component';
     PostsComponent, 
     BackButtonComponent, 
     MeComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    PostCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { PostDetailComponent } from './pages/post-detail/post-detail.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
