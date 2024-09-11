@@ -9,7 +9,9 @@ import { Subscription } from '../models/subscription.type';
 })
 export class TopicService {
   private apiGetTopics = 'http://localhost:8080/api/topics'
+  private apiGetTopicsUser = 'http://localhost:8080/api/topics/subscriptions'
   private apiSubscribe = 'http://localhost:8080/api/topics/subscribe'
+  private apiUnsubscribe = 'http://localhost:8080/api/topics/unsubscribe'
 
   constructor(
     private http: HttpClient
@@ -26,5 +28,13 @@ export class TopicService {
 
   subscribeTopic(topicId: number): Observable<Subscription> {
     return this.http.post<Subscription>(`${this.apiSubscribe}/${topicId}`, {})
+  }
+  
+  unsubscribeTopic(topicId: number): Observable<Subscription> {
+    return this.http.post<Subscription>(`${this.apiUnsubscribe}/${topicId}`, {})
+  }
+
+  getTopicsByUser(): Observable<Topic[]>{
+    return this.http.get<Topic[]>(this.apiGetTopicsUser)
   }
 }

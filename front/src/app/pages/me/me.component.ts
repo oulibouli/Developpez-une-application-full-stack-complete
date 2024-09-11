@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Topic } from 'src/app/core/models/topic.type';
 import { UserInfo } from 'src/app/core/models/user.type';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { TopicService } from 'src/app/core/services/topic.service';
 
 @Component({
   selector: 'app-me',
@@ -11,9 +13,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class MeComponent implements OnInit {
   userInfo!:UserInfo
   meForm!:FormGroup
+  topics: Topic[] = []
+  message: string = '';
 
   constructor(
     private authService: AuthService,
+    private topicService: TopicService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -36,6 +41,28 @@ export class MeComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
+      }
+    })
+
+    this.topicService.getTopicsByUser().subscribe({
+      next: (response) => {
+        this.topics = response
+        
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    })
+  }
+
+  unsubscribe(topicId: number) {
+    this.topicService.unsubscribeTopic(topicId).subscribe({
+      next: (response) => {
+        // Filter the list to exclude the topic
+        this.topics = this.topics.filter(topic => topic.id !== topicId);
+      },
+      error: (error) => {
+        console.error(error)
       }
     })
   }

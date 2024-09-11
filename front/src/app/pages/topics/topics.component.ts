@@ -20,7 +20,7 @@ export class TopicsComponent implements OnInit {
       error: (error) => console.log(error)
     })
   }
-  subscribe(topicId: number) {    
+  subscribe(topicId: number) {
     this.topicService.subscribeTopic(topicId).subscribe({
       next: (response) => {
         this.message = response.message
@@ -28,6 +28,6 @@ export class TopicsComponent implements OnInit {
       error: (error) => {
         console.error(error)
       }
-  })
-}
+    })
+  }
 }
