@@ -3,9 +3,9 @@
         <button mat-raised-button color="primary" class="create-article-btn" routerLink="/post">
           Créer un article
         </button>
-        <div class="sort-container">
-          Trier par 
-          <mat-icon>arrow_downward</mat-icon>
+        <div class="sort-container" (click)="sortOrder()">
+          Trier par date
+          <mat-icon>{{ arrow }}</mat-icon>
         </div>
     </div>
 
