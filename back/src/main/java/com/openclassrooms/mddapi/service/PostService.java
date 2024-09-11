@@ -14,11 +14,15 @@ import com.openclassrooms.mddapi.dto.PostDTO;
 import com.openclassrooms.mddapi.dto.PostDTOCreate;
 import com.openclassrooms.mddapi.dto.PostMapper;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PostService {
@@ -30,22 +34,35 @@ public class PostService {
     private TopicRepository topicRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
 
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
-        
-        // Transformer les entités Post en PostDTO
-        return posts.stream().map(post -> {          
-            return postMapper.toDto(post);
-        }).collect(Collectors.toList());
+    public ResponseEntity<List<PostDTO>> getAllPosts(UserDetails userDetails) {
+        try {
+            User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+            List<Subscription> subscribed = subscriptionRepository.findByUserAndIsActiveIsTrue(user);
+
+            // Use flatMap to collect all the posts
+            List<PostDTO> postDTOs = subscribed.stream()
+            .flatMap(sub -> postRepository.findAllByTopic(sub.getTopic()).stream())  // Get all the posts and add it to the flux
+            .map(postMapper::toDto)  // Convert the post entities in dto
+            .collect(Collectors.toList());  // Collect result in a list
+
+            return ResponseEntity.ok(postDTOs);
+        }
+        catch(EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     public ResponseEntity<PostDTO> getPostById(int id) {
         try {
             Post post = postRepository.findById(id)
-                .orElseThrow(() -> new Exception("Post not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + id));
             return ResponseEntity.ok(postMapper.toDto(post));
-        } catch(Exception e) {
+        } catch(EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error finding post : " + e.getMessage());
         }
     }

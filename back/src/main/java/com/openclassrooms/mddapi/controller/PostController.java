@@ -24,9 +24,8 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("")
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
-        List<PostDTO> postDTOs = postService.getAllPosts();
-        return ResponseEntity.ok(postDTOs);
+    public ResponseEntity<List<PostDTO>> getAllPosts(@AuthenticationPrincipal UserDetails userDetails) {
+        return postService.getAllPosts(userDetails);
     }
 
     @GetMapping("/{id}")
