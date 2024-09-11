@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,9 @@ public class PostMapper {
         post.setContent(postDTO.getContent());
         post.setDate(postDTO.getDate());
         post.setTitle(postDTO.getTitle());
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        post.setDate(currentDateTime);
 
         return post;
     }
