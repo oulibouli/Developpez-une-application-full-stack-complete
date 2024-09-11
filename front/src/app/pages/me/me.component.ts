@@ -5,6 +5,7 @@ import { UserInfo } from 'src/app/core/models/user.type';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { TopicService } from 'src/app/core/services/topic.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { passwordValidator } from 'src/app/shared/validators/password-validator';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class MeComponent implements OnInit {
   ngOnInit(): void {
     this.meForm = this.formBuilder.group({
       username: ['', [Validators.required]],
-      email: ['', [Validators.required]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [passwordValidator()]]
     })
     this.me()
   }
@@ -79,8 +81,8 @@ export class MeComponent implements OnInit {
 
   onSubmit() {
     if(this.meForm.invalid) return;
-    const { username, email } = this.meForm.value
-    this.authService.update({username, email}).subscribe({
+    const { username, email, password } = this.meForm.value
+    this.authService.update({username, email, password}).subscribe({
       next: () => {
         alert('Modification réussie. Veuillez vous reconnecter.')
         this.authService.logout()

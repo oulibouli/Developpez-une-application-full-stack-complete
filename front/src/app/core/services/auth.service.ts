@@ -43,6 +43,10 @@ export class AuthService {
   register(registerRequest: RegisterRequest): Observable<UserInfo> {
     return this.http.post<UserInfo>(this.apiRegister, registerRequest)
       .pipe(
+        tap(response => {
+          localStorage.setItem('token', response.token)
+          this.loggedIn.next(true)
+        }),
         catchError(error => {
           return throwError(() => new Error(error))
         })

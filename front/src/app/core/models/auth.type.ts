@@ -10,4 +10,5 @@ export type RegisterRequest = {
 export type UpdateRequest = {
     email: string
     username: string
+    password: string
 }
