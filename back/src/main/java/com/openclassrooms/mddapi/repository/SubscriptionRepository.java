@@ -13,4 +13,5 @@ import com.openclassrooms.mddapi.model.User;
 public interface SubscriptionRepository extends JpaRepository<Subscription, Integer> {
     Subscription findByUserAndTopic(User user, Topic topic);
     List<Subscription> findByUserAndIsActiveIsTrue(User user);
+    Boolean existsByUserAndTopicAndIsActiveIsTrue(User user, Topic topic);
 }

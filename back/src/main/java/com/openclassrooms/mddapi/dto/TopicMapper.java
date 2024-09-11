@@ -6,12 +6,12 @@ import com.openclassrooms.mddapi.model.Topic;
 
 @Component
 public class TopicMapper {
-    public TopicDTO toDto(Topic topic) {
+    public TopicDTO toDto(Topic topic, boolean subscribed) {
         TopicDTO topicDTO = new TopicDTO();
         topicDTO.setDescription(topic.getDescription());
         topicDTO.setId(topic.getId());
         topicDTO.setTitle(topic.getTitle());
-
+        topicDTO.setSubscribed(subscribed);
         return topicDTO;
     }
 }

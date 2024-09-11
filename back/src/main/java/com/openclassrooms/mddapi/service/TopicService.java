@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,12 +32,15 @@ public class TopicService {
     @Autowired
     private SubscriptionRepository subscriptionRepository;
 
-    public ResponseEntity<List<TopicDTO>> getTopics() {
+    public ResponseEntity<List<TopicDTO>> getTopics(UserDetails userDetails) {
         List<Topic> topics = topicRepository.findAll();
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        List<TopicDTO> topicDTOs = topics.stream().map(topic -> {          
-            return topicMapper.toDto(topic);
-        }).collect(Collectors.toList());
+        List<TopicDTO> topicDTOs = new ArrayList<>();
+        topics.forEach(topic -> {
+            boolean subscribed = subscriptionRepository.existsByUserAndTopicAndIsActiveIsTrue(user, topic);
+            topicDTOs.add(topicMapper.toDto(topic, subscribed));
+        });
 
         return ResponseEntity.ok(topicDTOs);
     }
@@ -127,7 +129,7 @@ public class TopicService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
             List<Subscription> subscriptions = subscriptionRepository.findByUserAndIsActiveIsTrue(user);
             List<TopicDTO> topicDTOs = new ArrayList<>();
-            subscriptions.forEach(subscription -> topicDTOs.add(topicMapper.toDto(subscription.getTopic())));
+            subscriptions.forEach(subscription -> topicDTOs.add(topicMapper.toDto(subscription.getTopic(), true)));
 
             return ResponseEntity.ok(topicDTOs);
         }

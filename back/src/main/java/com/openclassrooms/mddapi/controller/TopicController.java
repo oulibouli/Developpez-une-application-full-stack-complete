@@ -25,8 +25,8 @@ public class TopicController {
     private TopicService topicService;
 
     @GetMapping("")
-    public ResponseEntity<List<TopicDTO>> getTopics() {
-        return topicService.getTopics();
+    public ResponseEntity<List<TopicDTO>> getTopics(@AuthenticationPrincipal UserDetails userDetails) {
+        return topicService.getTopics(userDetails);
     }
 
     @PostMapping("/subscribe/{topicId}")
