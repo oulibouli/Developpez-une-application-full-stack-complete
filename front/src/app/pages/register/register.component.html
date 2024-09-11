@@ -1,23 +1,32 @@
 <div class="container">
     <app-back-button></app-back-button>
     <div class="form-container">
-        <h2>Inscription</h2>
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" formControlName="username">
-            </div>
-            <div class="form-group">
-                <label for="email">Adresse e-mail</label>
-                <input type="email" id="email" formControlName="email">
-            </div>
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" formControlName="password">
-            </div>
-            <button type="submit" class="button" [disabled]="registerForm.invalid">S'inscrire</button>
-        </form>
-
-        <div *ngIf="message" [ngClass]="messageClass" id="message">{{ message }}</div>
+      <h2>S'inscrire</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput type="text" id="username" formControlName="username" />
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Adresse email</mat-label>
+          <input matInput type="email" id="email" formControlName="email" />
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" id="password" formControlName="password" />
+          <mat-error *ngIf="registerForm.get('password')?.hasError('passwordStrength')">
+            Le mot de passe doit comporter au moins 8 caractères, avec au moins un chiffre, une majuscule, une minuscule, et un caractère spécial.
+          </mat-error>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" class="button" type="submit" [disabled]="registerForm.invalid">
+          S'inscrire
+        </button>
+      </form>
+  
+      <div *ngIf="message" [ngClass]="messageClass" id="message">{{ message }}</div>
     </div>
-</div>
+  </div>
