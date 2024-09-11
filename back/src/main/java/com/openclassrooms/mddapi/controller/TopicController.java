@@ -33,4 +33,14 @@ public class TopicController {
     public ResponseEntity<SubscriptionDTO> subscribe(@PathVariable int topicId, @AuthenticationPrincipal UserDetails userDetails) {
         return topicService.subscribe(topicId, userDetails);
     }
+    
+    @PostMapping("/unsubscribe/{topicId}")
+    public ResponseEntity<SubscriptionDTO> unsubscribe(@PathVariable int topicId, @AuthenticationPrincipal UserDetails userDetails) {
+        return topicService.unsubscribe(topicId, userDetails);
+    }
+
+    @GetMapping("/subscriptions")
+    public ResponseEntity<List<TopicDTO>> getSubscriptionsByUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return topicService.getSubscriptionsByUser(userDetails);
+    }
 }

@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,7 @@ public class TopicService {
             if (existingSubscription != null) {
                 if (!existingSubscription.isActive()) {
                     existingSubscription.setActive(true);
-                    subscription = existingSubscription;  // Assigne ici la subscription
+                    subscription = existingSubscription;
                     subscriptionDTO.setMessage("Votre abonnement à ce thème à été réactivé");
                 } else {
                     subscriptionDTO.setMessage("Vous êtes déjà abonné à ce thème");
@@ -68,7 +69,6 @@ public class TopicService {
                 subscriptionDTO.setMessage("Votre abonnement à ce thème à été activé");
             }
             
-            // Vérifie que `subscription` est non-nulle avant de la sauvegarder
             if (subscription != null) {
                 subscriptionRepository.save(subscription);
                 subscriptionDTO.setActive(true);
@@ -82,6 +82,57 @@ public class TopicService {
         catch (EntityNotFoundException e) {
             subscriptionDTO.setMessage(e.getMessage());
             return new ResponseEntity<>(subscriptionDTO, HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    public ResponseEntity<SubscriptionDTO> unsubscribe(Integer topicId, UserDetails userDetails) {
+        SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+        try {
+            User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+            Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+            Subscription existingSubscription = subscriptionRepository.findByUserAndTopic(user, topic);
+            
+            Subscription subscription = null;
+
+            if (existingSubscription != null) {
+                if (existingSubscription.isActive()) {
+                    existingSubscription.setActive(false);
+                    subscription = existingSubscription;
+                    subscriptionDTO.setMessage("Votre abonnement à ce thème à été désactivé");
+                } else {
+                    subscriptionDTO.setMessage("Vous n'êtes pas abonné à ce thème");
+                }
+            }
+            
+            if (subscription != null) {
+                subscriptionRepository.save(subscription);
+                subscriptionDTO.setActive(false);
+                subscriptionDTO.setId(subscription.getId());
+                subscriptionDTO.setTopic(subscription.getTopic().getTitle());
+                subscriptionDTO.setUser(subscription.getUser().getEmail());
+            }
+
+            return ResponseEntity.ok(subscriptionDTO);
+        }
+        catch (EntityNotFoundException e) {
+            subscriptionDTO.setMessage(e.getMessage());
+            return new ResponseEntity<>(subscriptionDTO, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<List<TopicDTO>> getSubscriptionsByUser(UserDetails userDetails) {
+        try {
+            User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+            List<Subscription> subscriptions = subscriptionRepository.findByUserAndIsActiveIsTrue(user);
+            List<TopicDTO> topicDTOs = new ArrayList<>();
+            subscriptions.forEach(subscription -> topicDTOs.add(topicMapper.toDto(subscription.getTopic())));
+
+            return ResponseEntity.ok(topicDTOs);
+        }
+        catch(EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
