@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Topic } from 'src/app/core/models/topic.type';
 import { TopicService } from 'src/app/core/services/topic.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-topics',
@@ -10,9 +11,19 @@ import { TopicService } from 'src/app/core/services/topic.service';
 export class TopicsComponent implements OnInit {
   topics: Topic[] = []
   message: string = '';
+  buttonContent: string = ''
+  
   constructor(
-    private topicService: TopicService
+    private topicService: TopicService,
+    private snackBar: MatSnackBar
   ) { }
+
+
+  showNotification(message: string) {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3000,
+    });
+  }
 
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
@@ -23,7 +34,25 @@ export class TopicsComponent implements OnInit {
   subscribe(topicId: number) {
     this.topicService.subscribeTopic(topicId).subscribe({
       next: (response) => {
-        this.message = response.message
+        const topic = this.topics.find(t => t.id === topicId);
+        if (topic) {
+          topic.subscribed = true;
+        }
+        this.showNotification(response.message);
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    })
+  }
+  unsubscribe(topicId: number) {
+    this.topicService.unsubscribeTopic(topicId).subscribe({
+      next: (response) => {
+        const topic = this.topics.find(t => t.id === topicId);
+        if (topic) {
+          topic.subscribed = false;
+        }
+        this.showNotification(response.message);
       },
       error: (error) => {
         console.error(error)

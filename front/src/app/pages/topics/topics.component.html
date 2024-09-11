@@ -4,12 +4,20 @@
         <mat-card-title>{{ topic.title }}</mat-card-title>
         <mat-card-content>
           <p>{{ topic.description | slice:0:200 }}...</p>
-          <p class="center">
+
+          <p class="center" *ngIf="!topic.subscribed">
             <button class="btn" mat-raised-button color="primary" (click)="subscribe(topic.id)">
               S'abonner
             </button>
-            <span *ngIf="message" id="message">{{ message }}</span>
           </p>
+
+          <p class="center" *ngIf="topic.subscribed">
+            <button class="btn" mat-raised-button color="primary" (click)="unsubscribe(topic.id)">
+              Se désabonner
+            </button>
+          </p>
+
+          <p *ngIf="message" id="message">{{ message }}</p>
         </mat-card-content>
       </mat-card>
     </div>

@@ -25,7 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 import { PostCreateComponent } from './pages/post-create/post-create.component'; 
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,8 @@ import { PostCreateComponent } from './pages/post-create/post-create.component';
     MatProgressSpinnerModule,
     MatDividerModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
