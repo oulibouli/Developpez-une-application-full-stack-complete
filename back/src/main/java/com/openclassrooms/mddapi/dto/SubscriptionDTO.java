@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SubscriptionDTO {
-    private String error;
+    private String message;
     private int id;
     private String user;
     private String topic;
