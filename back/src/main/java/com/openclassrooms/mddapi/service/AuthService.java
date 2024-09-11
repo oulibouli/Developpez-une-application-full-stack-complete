@@ -55,8 +55,9 @@ public class AuthService {
 
             // If the user is saved successfully, set the response details
             if(newUser != null && newUser.getId() > 0) {
+                Authentication authentication = authenticateUser(newUser.getEmail(), authDTO.getPassword());
+                String jwt = jwtUtil.generateToken(authentication.getName());
                 response.setUser(newUser);
-                String jwt = jwtUtil.generateToken(newUser.getEmail());
                 response.setToken(jwt);
             }
         }
@@ -128,12 +129,12 @@ public class AuthService {
 
     public ResponseEntity<Map<String, Object>> updateUserProfile(UserDetails userDetails, AuthDTO authDTO) {   
         try {
-        User user = userRepository.findByUsername(userDetails.getUsername())
-            .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + authDTO.getEmail()));
+            User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + authDTO.getEmail()));
     
-            user.setEmail(authDTO.getEmail());
-            user.setUsername(authDTO.getUsername());
-            userRepository.save(user);
+            User updatedUser = authMapper.toUpdatedEntity(user, authDTO);
+            
+            userRepository.save(updatedUser);
     
             return ResponseEntity.ok(Collections.singletonMap("message", "User updated successfully!"));
     

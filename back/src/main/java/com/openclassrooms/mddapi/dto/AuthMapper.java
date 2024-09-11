@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
+import com.openclassrooms.mddapi.util.StringUtils;
 
 @Component // Annotation for Spring-managed component.
 public class AuthMapper {
@@ -29,6 +30,16 @@ public class AuthMapper {
         user.setPassword(passwordEncoder.encode(authDTO.getPassword())); // Encoding the password and setting it.
         user.setRole(defaultRole); // Setting a default role for the user.
 
+        return user; // Returning the created Users entity.
+    }
+    
+    public User toUpdatedEntity(User user, AuthDTO authDTO) {
+        user.setEmail(authDTO.getEmail()); // Setting the email from authDTO to Users entity.
+        user.setUsername(authDTO.getUsername()); // Setting the name from authDTO to Users entity.
+        
+        if(!StringUtils.isNullOrEmpty(authDTO.getPassword())) {
+            user.setPassword(passwordEncoder.encode(authDTO.getPassword())); // Encoding the password and setting it.
+        }
         return user; // Returning the created Users entity.
     }
 
