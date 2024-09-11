@@ -3,4 +3,5 @@ export type Subscription = {
     user: number
     topic: number
     isActive: boolean
+    message: string
 }

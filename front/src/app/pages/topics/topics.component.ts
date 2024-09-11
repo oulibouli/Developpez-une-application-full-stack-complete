@@ -9,6 +9,7 @@ import { TopicService } from 'src/app/core/services/topic.service';
 })
 export class TopicsComponent implements OnInit {
   topics: Topic[] = []
+  message: string = '';
   constructor(
     private topicService: TopicService
   ) { }
@@ -22,10 +23,10 @@ export class TopicsComponent implements OnInit {
   subscribe(topicId: number) {    
     this.topicService.subscribeTopic(topicId).subscribe({
       next: (response) => {
-        console.log(response);
+        this.message = response.message
       },
       error: (error) => {
-        console.error('Error :', error);
+        console.error(error)
       }
   })
 }

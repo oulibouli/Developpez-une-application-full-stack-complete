@@ -26,10 +26,5 @@ export class TopicService {
 
   subscribeTopic(topicId: number): Observable<Subscription> {
     return this.http.post<Subscription>(`${this.apiSubscribe}/${topicId}`, {})
-    .pipe(
-      catchError(error => {
-        return throwError(() => new Error(error.message || 'Unknown error occurred'));
-      })
-    )
   }
 }

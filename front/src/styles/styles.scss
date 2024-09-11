@@ -154,10 +154,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
   
   .card-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes de même taille */
     gap: 20px; /* Espace entre les cartes */
-    justify-content: space-between;
     padding: 20px; /* Espace autour de la grille */
   }
 
@@ -165,10 +164,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding-bottom: 10px;
   }
 
-  mat-card {
-    width: 100%; /* La carte occupe toute la largeur */
-    margin: 0;
-  }
   
   button mat-icon {
     font-size: 24px;
