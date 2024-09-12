@@ -52,13 +52,17 @@ public class PostService {
             User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-            List<Subscription> subscribed = subscriptionRepository.findByUserAndIsActiveIsTrue(user);
+            List<Subscription> subscriptions = subscriptionRepository.findByUserAndIsActiveIsTrue(user);
 
-            // Use flatMap to collect all the posts
-            List<PostDTO> postDTOs = subscribed.stream()
-            .flatMap(sub -> postRepository.findAllByTopic(sub.getTopic()).stream())  // Get all the posts and add it to the flux
-            .map(postMapper::toDto)  // Convert the post entities in dto
-            .collect(Collectors.toList());  // Collect result in a list
+            List<Topic> topics = subscriptions.stream()
+                .map(Subscription::getTopic)
+                .collect(Collectors.toList());
+            
+            List<Post> posts = postRepository.findAllByTopics(topics);
+
+            List<PostDTO> postDTOs = posts.stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
 
             return ResponseEntity.ok(postDTOs);
         }
