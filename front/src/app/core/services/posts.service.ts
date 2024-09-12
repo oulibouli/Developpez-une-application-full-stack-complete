@@ -15,6 +15,7 @@ export class PostsService {
     private http: HttpClient
   ) {}
 
+  // Fetch all posts from the server
   getAllPosts():Observable<Post[]> {
     return this.http.get<Post[]>(this.apiPosts)
       .pipe(
@@ -24,6 +25,7 @@ export class PostsService {
       )
   }
 
+  // Fetch a specific post by its ID
   getPostById(id:number): Observable<Post> {
     return this.http.get<Post>(`${this.apiPosts}/${id}`)
       .pipe(
@@ -33,6 +35,7 @@ export class PostsService {
       )
   }
 
+  // Add a new comment to a post
   addComment(comment: Partial<CreateComment>, postId: number): Observable<UserComment> {
     return this.http.post<UserComment>(`${this.apiComment}/${postId}`, comment)
     .pipe(
@@ -42,6 +45,7 @@ export class PostsService {
     )
   }
 
+  // Create a new post for a specific topic
   createPost(post: Partial<Post>, topicId: number): Observable<Post> {
     return this.http.post<Post>(`${this.apiCreatePost}/${topicId}`, post)
     .pipe(

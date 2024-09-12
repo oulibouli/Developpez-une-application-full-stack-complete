@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
   ) {}
 
+  // Initialize registration form with validators
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  // Handle form submission for user registration
   onSubmit(): void{
     if(this.registerForm.invalid) return;
     const { email, username, password } = this.registerForm.value

@@ -10,14 +10,15 @@ import { PostsService } from 'src/app/core/services/posts.service';
 })
 export class PostsComponent implements OnInit {
   posts:Post[] = []
-  isDescending: boolean = true; // Sort from recent to older
-  arrow:string = "arrow_downward"
+  isDescending: boolean = true; // Default to sort posts from recent to oldest
+  arrow:string = "arrow_downward" // UI icon for sorting
 
   constructor(
     private postService: PostsService,
     private router: Router
   ) { }
 
+  // Fetch and sort posts by date on component initialization
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe({
       next: (response: Post[]) => {
@@ -30,7 +31,7 @@ export class PostsComponent implements OnInit {
     })
   }
 
-  // Sort Posts by date
+  // Sort posts either by recent or oldest
   sortPosts(): void {
     this.posts.sort((a, b) => {
       const dateA = new Date(a.date).getTime();
@@ -46,6 +47,7 @@ export class PostsComponent implements OnInit {
     this.isDescending ? this.arrow = "arrow_downward" : this.arrow = "arrow_upward"
   }
 
+  // Open a post detail view by its ID
   openPost(postId: number) {
     this.router.navigate(['/posts', postId])
   }

@@ -17,6 +17,7 @@ export class TopicService {
     private http: HttpClient
   ) { }
 
+  // Fetch all topics
   getTopics(): Observable<Topic[]>{
     return this.http.get<Topic[]>(this.apiGetTopics)
     .pipe(
@@ -26,14 +27,17 @@ export class TopicService {
     )
   }
 
+  // Subscribe to a specific topic
   subscribeTopic(topicId: number): Observable<Subscription> {
     return this.http.post<Subscription>(`${this.apiSubscribe}/${topicId}`, {})
   }
   
+  // Unsubscribe from a specific topic
   unsubscribeTopic(topicId: number): Observable<Subscription> {
     return this.http.post<Subscription>(`${this.apiUnsubscribe}/${topicId}`, {})
   }
 
+  // Fetch all topics the user is subscribed to
   getTopicsByUser(): Observable<Topic[]>{
     return this.http.get<Topic[]>(this.apiGetTopicsUser)
   }

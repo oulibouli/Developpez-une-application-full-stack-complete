@@ -17,10 +17,12 @@ export class PostDetailComponent implements OnInit {
     private postService: PostsService
   ) { }
 
+  // Fetch post details when the component initializes
   ngOnInit(): void {
     this.getPost();
   }
 
+  // Fetch the post by ID
   getPost(){
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -30,8 +32,8 @@ export class PostDetailComponent implements OnInit {
     else console.error('ID is null');
   }
 
+  // Handle comment submission
   sendComment() {
-
     const description = this.newComment;
     const postId = this.post.id;
     const date = new Date().toISOString()

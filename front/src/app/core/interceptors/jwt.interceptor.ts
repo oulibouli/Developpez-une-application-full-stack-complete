@@ -17,12 +17,13 @@ export class JwtInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
 
+  // Intercept outgoing HTTP requests to attach JWT token in the headers
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Get the token from the localStorage
     const token = localStorage.getItem('token')
 
     if(token) {
-      // Clone the request to add the Authorization header
+      // Clone request and add Authorization header if token exists
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
@@ -32,7 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(err => {
         if (err.status === 401) {
-          // Redirect to login page
+          // If unauthorized, logout and redirect to login
           this.authService.logout()
           this.router.navigate(['/login'])
         }

@@ -18,19 +18,22 @@ export class TopicsComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
 
-
+  // Display a notification
   showNotification(message: string) {
     this.snackBar.open(message, 'Fermer', {
       duration: 3000,
     });
   }
 
+  // Fetch all topics on initialization
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
       next: (response: Topic[]) => this.topics = response,
       error: (error) => console.log(error)
     })
   }
+
+  // Subscribe to a topic
   subscribe(topicId: number) {
     this.topicService.subscribeTopic(topicId).subscribe({
       next: (response) => {
@@ -45,6 +48,8 @@ export class TopicsComponent implements OnInit {
       }
     })
   }
+
+  // Unsubscribe a topic
   unsubscribe(topicId: number) {
     this.topicService.unsubscribeTopic(topicId).subscribe({
       next: (response) => {

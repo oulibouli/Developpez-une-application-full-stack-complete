@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
   ) {}
 
+  // Initialize the login form with validators
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
         identifier: ['', [Validators.required]],
@@ -27,15 +28,17 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  // Handle the form submission
   onSubmit() {
     if (this.loginForm.invalid) return;
     const { identifier, password } = this.loginForm.value
     this.authService.login({identifier, password}).subscribe({
       next: () => {
-        // If succeed, redirect
+        // Redirect to posts page on successful login
         this.router.navigate(['/posts'])
       },
       error: () => {
+        // Show error message if login fails
         this.message = 'Identifiant ou mot de passe incorrect'
         this.messageClass= 'error'
       }

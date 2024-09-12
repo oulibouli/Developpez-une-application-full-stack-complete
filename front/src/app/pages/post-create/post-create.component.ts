@@ -21,26 +21,28 @@ export class PostCreateComponent implements OnInit {
     private postService: PostsService
   ) { }
 
+  // Initialize form and fetch topics
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
       next:(topics: Topic[]) => this.topics = topics,
       error: (error) => console.log(error)
     })
-
     this.createForm = this.formBuilder.group({
       topic:['', Validators.required],
       title:['', Validators.required],
       content:['', Validators.required]
     })
   }
+
+  // Handle form submission to create a post
   onSubmit() {
     if(this.createForm.invalid) return;
 
     const { topic, title, content } = this.createForm.value
 
     this.postService.createPost({title, content}, topic).subscribe({
-      next: (response) => {
-        this.createForm.reset()
+      next: () => {
+        this.createForm.reset() // Reset form after successful submission
         this.messageClass = 'success'
         this.message = 'Article créé avec succès'
       },

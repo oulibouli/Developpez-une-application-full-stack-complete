@@ -15,20 +15,11 @@ export class AppComponent implements OnInit{
   title = 'front';
 
   ngOnInit(): void {
-    this.checkTokenExpiration()
+    this.authService.checkTokenExpiration() // Check token expiration on component load
   }
 
-  private checkTokenExpiration(): void {
-    let token = localStorage.getItem('token')
-    if(token !== null) {
-      const expired = this.authService.isTokenExpired(token)      
-      if(expired) {
-        localStorage.removeItem('token')
-      }
-    }
-  }
-
+  // Method to conditionally show or hide the banner based on the current route
   showBanner(): boolean {    
-    return this.router.url !== '/';
+    return this.router.url !== '/'; // Show the banner if the current route is not the home page
   }
 }

@@ -26,12 +26,14 @@ export class MeComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
 
+  // Display notification messages
   showNotification(message: string) {
     this.snackBar.open(message, 'Fermer', {
       duration: 3000,
     });
   }
 
+  // Initialize form and fetch user info and topics
   ngOnInit(): void {
     this.meForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -41,6 +43,7 @@ export class MeComponent implements OnInit {
     this.me()
   }
 
+  // Fetch user information and topics subscribed by the user
   me() {
     this.authService.userInfos().subscribe({
       next: (response) => {
@@ -58,7 +61,6 @@ export class MeComponent implements OnInit {
     this.topicService.getTopicsByUser().subscribe({
       next: (response) => {
         this.topics = response
-        
       },
       error: (error) => {
         console.error(error)
@@ -66,6 +68,7 @@ export class MeComponent implements OnInit {
     })
   }
 
+  // Unsubscribe from a topic
   unsubscribe(topicId: number) {
     this.topicService.unsubscribeTopic(topicId).subscribe({
       next: (response) => {
@@ -79,6 +82,7 @@ export class MeComponent implements OnInit {
     })
   }
 
+  // Update user profile
   onSubmit() {
     if(this.meForm.invalid) return;
     const { username, email, password } = this.meForm.value
@@ -91,9 +95,9 @@ export class MeComponent implements OnInit {
         console.log(error);
       }
     })
-    
   }
 
+  // Logout the user
   logout() {
     this.authService.logout()
   }

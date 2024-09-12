@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -11,6 +10,7 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
     private router: Router
   ){}
+  // Guard method to determine if a route can be activated
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -21,15 +21,16 @@ export class AuthGuard implements CanActivate {
       const isLogged = this.authService.isLoggedIn()            
 
       if(isOnRoute && isLogged) {
-        // If public route and logged in, redirect
+        // If user is logged in and on a public route, redirect to /posts
         return this.router.createUrlTree(['/posts']);
       }
       
       if (!isOnRoute && !isLogged) {
-        // If private route and not logged in, redirect
+         // If the route is private and user is not logged in, redirect to home
         return this.router.createUrlTree(['']);
       }
-      else {      
+      else {     
+        // Allow access if all conditions are met 
         return true
       }
     }
