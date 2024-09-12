@@ -9,6 +9,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class BannerComponent implements OnInit {
   isLogged: boolean = false
+  isMenuActive = false; // Variable pour l'état du menu
+
+  toggleMenu() {
+    this.isMenuActive = !this.isMenuActive;
+  }
+  
   private unsubscribe$ = new Subject<void>(); // Create a Subject to unsubscribe the Observable
 
   constructor(

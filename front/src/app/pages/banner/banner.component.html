@@ -2,9 +2,23 @@
   <div class="toolbar-left">
     <img src="/assets/logo_p6.png" alt="MDD Logo" class="logo" routerLink="/" />
   </div>
-  <div class="toolbar-right" *ngIf="isLogged">
+
+  <!-- Mobile hamburger menu button -->
+  <button mat-icon-button (click)="toggleMenu()" class="menu-button">
+    <mat-icon>menu</mat-icon>
+  </button>
+  
+  <!-- Desktop menu --> 
+  <div class="toolbar-right desktop-menu" *ngIf="isLogged">
     <a routerLink="/posts" routerLinkActive="active-link" class="nav-link">Articles</a>
     <a routerLink="/topics" routerLinkActive="active-link" class="nav-link">Themes</a>
     <mat-icon routerLink="/me" routerLinkActive="active-link">account_circle</mat-icon>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" [class.active]="isMenuActive">
+    <a routerLink="/posts" routerLinkActive="active-link" class="nav-link" (click)="toggleMenu()">Articles</a>
+    <a routerLink="/topics" routerLinkActive="active-link" class="nav-link" (click)="toggleMenu()">Thèmes</a>
+    <a routerLink="/me" routerLinkActive="active-link" class="nav-link account-icon" (click)="toggleMenu()"><mat-icon>account_circle</mat-icon></a>
   </div>
 </mat-toolbar>

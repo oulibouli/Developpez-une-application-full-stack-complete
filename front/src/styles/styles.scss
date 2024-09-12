@@ -154,9 +154,33 @@ h2 {
 /* Action container layout */
 .actions-container {
   display: flex;
+  flex-wrap: wrap; /* Enables wrapping for responsiveness */
   justify-content: space-between;
   width: 100%;
   margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.menu-button {
+  display: none; /* Default, hide on large screens */
+}
+
+/* Hide the menu on mobile by default */
+.nav-links {
+  display: flex;
+  list-style: none;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
+}
+
+.nav-links.active {
+  transform: translateX(0);
 }
 
 /* Left-aligned button */
@@ -169,7 +193,6 @@ h2 {
   display: flex;
   align-items: center;
   font-size: 16px;
-  margin-left: auto;
 }
 
 /* Icon size in sort container */
@@ -181,7 +204,7 @@ h2 {
 /* Grid layout for cards */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
   gap: 20px;
   padding: 20px;
 }
@@ -258,4 +281,25 @@ button mat-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .menu-button {
+    display: block; /* Show the menu button on mobile */
+  }
+
+  .nav-links {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 100%;
+    background-color: white;
+  }
+
+  .actions-container {
+    flex-direction: column;
+    align-items: center; 
+    gap: 10px; 
+  }
 }

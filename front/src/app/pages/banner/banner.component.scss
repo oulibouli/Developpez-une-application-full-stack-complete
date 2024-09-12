@@ -1,3 +1,115 @@
-mat-icon {
-    cursor: pointer;
+.mat-icon {
+  cursor: pointer;
+}
+/* Navigation bar (toolbar) */
+.toolbar {
+  background-color: white;
+  border-bottom: 1px solid black;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+/* Alignment of content to the left (logo) */
+.toolbar-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Navigation links style on desktop */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+}
+
+/* Navigation links for mobile */
+.mobile-menu {
+  list-style: none;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+  
+/* Icon style */
+.mat-icon {
+  color: black;
+}
+
+/* Hide the hamburger menu button on large screens */
+.menu-button {
+  display: none;
+}
+
+/* Mobile specific styles */
+@media (max-width: 768px) {
+  .mat-icon {
+      height: 50px;
+      width: 50px;
+  }
+  /* Hide desktop menu on mobile */
+  .desktop-menu {
+    display: none;
+  }
+
+  /* Hamburger button visible only on mobile */
+  .menu-button {
+    display: block;
+    z-index: 1001; /* Ensures the button stays above the menu */
+  }
+
+  /* Mobile menu: slides in from the right */
+  .mobile-menu {
+      position: fixed;
+      top: 60px; /* Starts just below the navigation bar */
+      right: 0; /* Positioned to the right */
+      height: calc(100% - 60px); /* Limits the height to avoid covering the navigation bar */
+      width: 200px; /* Width of the menu */
+      background-color: white;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Shadow on the left */
+      transform: translateX(100%); /* Hidden off-screen to the right */
+      transition: transform 0.3s ease-in-out;
+      padding: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column; /* Vertical arrangement of elements */
+      justify-content: space-between;
+  }
+
+  .account-icon {
+      margin-top: auto; /* Ensures the icon stays at the bottom */
+      text-align: left;
+      padding: 20px 20px;
+  }
+  
+  .account-icon mat-icon {
+      font-size: 40px; /* Adjusts the icon size */
+      color: black;
+  }
+
+  /* When the menu is active */
+  .mobile-menu.active {
+    transform: translateX(0); /* Menu slides from right to left */
+  }
+
+  /* Mobile menu links style */
+  .nav-link {
+    display: block;
+    color: black;
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-decoration: none;
+  }
+
+  /* Active link style */
+  .active-link {
+    font-weight: bold;
+    color: #6a4bba;
+  }
 }
