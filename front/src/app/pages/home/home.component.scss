@@ -1,3 +1,4 @@
+/* Centers content both vertically and horizontally */
 .center {
   height: 100vh;
   display: flex;
@@ -5,6 +6,8 @@
   align-items: center;
   flex-direction: column;
 }
+
+/* Aligns buttons with space between them */
 .button-group {
   display: flex;
   justify-content: center;

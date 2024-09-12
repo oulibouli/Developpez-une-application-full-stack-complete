@@ -1,232 +1,261 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Full height for html and body */
 html, body { height: 100%; }
+
+/* Reset margins and set default font */
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-  
-  .container {
-    max-width: 500px;
-    margin: 0px auto;
-    padding: 30px;
-    text-align: center;
-  }
 
-  .toolbar {
-    background-color: white; /* Toolbar blanche */
-    border-bottom: 1px solid black; /* Bordure inférieure noire */
-    color: black; /* Texte noir */
-  }
-  
-  .header {
-    display: flex;
-    justify-content: auto;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid black;
-  }
-  
-  .logo {
-    width: 100px;
-  }
-  
-  .back-button {
-    position: absolute;
-    left: 20px;
-  }
-  
-  .back-icon {
-    font-size: 24px;
-    color: black;
-    text-decoration: none;
-  }
-  
-  .form-container {
-    padding: 20px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  .form-group label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  
-  .button {
-    width: 100%;
-    padding: 10px;
-    background-color: #6a4bba;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #5b3e9f;
-  }
-  .toolbar {
-    background-color: white;
-    border-bottom: 1px solid black;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Espacement entre les éléments */
-    padding: 0 20px;
-  }
-  
-  .toolbar-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .toolbar-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 100px;
-  }
-  
-  .nav-link {
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 0 15px;
-  }
-  
-  .mat-icon {
-    color: gray;
-    vertical-align: middle;
-  }
-  .active-link {
-    font-weight: bold;
-    color: #6a4bba;
-  }
-  .mat-form-field {
-    width: 100%; /* Les champs prendront toute la largeur du conteneur */
-  }
-  
-  .form-group {
-    display: block; 
-    margin-bottom: 20px;
-  }
+/* Center the content in the container */
+.container {
+  max-width: 500px;
+  margin: 0px auto;
+  padding: 30px;
+  text-align: center;
+}
 
-  .full-container {
-    display: flex;
-    flex-direction: column;
-    margin: 20px auto;
-    padding: 20px;
-  }
-  
-  .actions-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .create-article-btn {
-    margin-right: auto;
-  }
-  
-  .sort-container {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    margin-left: auto;
-  }
-  
-  .sort-container mat-icon {
-    font-size: 18px;
-    margin-left: 5px;
-  }
-  
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Deux colonnes de même taille */
-    gap: 20px; /* Espace entre les cartes */
-    padding: 20px; /* Espace autour de la grille */
-  }
+/* Toolbar styles */
+.toolbar {
+  background-color: white; /* White toolbar */
+  border-bottom: 1px solid black; /* Black bottom border */
+  color: black; /* Black text */
+}
 
-  .mat-card-title {
-    padding-bottom: 10px;
-  }
+/* Header section styling */
+.header {
+  display: flex;
+  justify-content: auto;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+}
 
-  
-  button mat-icon {
-    font-size: 24px;
-    color: #7B61FF; /* Couleur violette pour l'icône */
-  }
+/* Logo dimensions */
+.logo {
+  width: 100px;
+}
 
-  .layout-container {
-    display: flex;
-    width: 100%;
-    padding: 20px;
-  }
-  
-  .left-column {
-    width: 50px; /* Taille ajustable pour le bouton de retour */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  .right-column {
-    flex-grow: 1;
-    padding-left: 20px; /* Ajoute un espace entre la colonne de gauche et le contenu */
-    margin-right: 50px;
-  }
+/* Back button positioning */
+.back-button {
+  position: absolute;
+  left: 20px;
+}
 
-  .success {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-  }
-  #message {
-    padding: 5%;
-  }
+/* Back icon size and color */
+.back-icon {
+  font-size: 24px;
+  color: black;
+  text-decoration: none;
+}
 
+/* Form container padding */
+.form-container {
+  padding: 20px;
+}
 
-  .post-card {
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #f4f4f4;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    }
-  
-    mat-card-title {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-  
-    .center {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Centrer les éléments horizontalement */
-    }
-  }
+/* Heading styling */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Form group layout */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Label styling */
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Button styling */
+.button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6a4bba;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.button:hover {
+  background-color: #5b3e9f;
+}
+
+/* Toolbar layout */
+.toolbar {
+  background-color: white;
+  border-bottom: 1px solid black;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between elements */
+  padding: 0 20px;
+}
+
+/* Align elements in toolbar */
+.toolbar-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Align elements on the right side of toolbar */
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Style for navigation links */
+.nav-link {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 15px;
+}
+
+/* Icon styling */
+.mat-icon {
+  color: gray;
+  vertical-align: middle;
+}
+
+/* Active link styling */
+.active-link {
+  font-weight: bold;
+  color: #6a4bba;
+}
+
+/* Full width form fields */
+.mat-form-field {
+  width: 100%;
+}
+
+/* Form group block layout */
+.form-group {
+  display: block;
+  margin-bottom: 20px;
+}
+
+/* Full container layout */
+.full-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+/* Action container layout */
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Left-aligned button */
+.create-article-btn {
+  margin-right: auto;
+}
+
+/* Sort container layout */
+.sort-container {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-left: auto;
+}
+
+/* Icon size in sort container */
+.sort-container mat-icon {
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+/* Grid layout for cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Card title padding */
+.mat-card-title {
+  padding-bottom: 10px;
+}
+
+/* Icon size and color inside button */
+button mat-icon {
+  font-size: 24px;
+  color: #7B61FF;
+}
+
+/* Layout container for sections */
+.layout-container {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Left column layout */
+.left-column {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Right column layout */
+.right-column {
+  flex-grow: 1;
+  padding-left: 20px;
+  margin-right: 50px;
+}
+
+/* Success message styling */
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+/* Message padding */
+#message {
+  padding: 5%;
+}
+
+/* Card layout with hover effects */
+.post-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f4f4f4;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Center content */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

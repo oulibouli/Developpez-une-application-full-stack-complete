@@ -1,80 +1,91 @@
-  .header {
-    margin-bottom: 20px;
-  }
+/* Adds margin to the bottom of the header */
+.header {
+  margin-bottom: 20px;
+}
 
-  .comment-content {
-    display: flex;
-    align-items: baseline; /* Assure que le texte soit aligné correctement avec le nom d'utilisateur */
-    margin-inline: 50px;
-  }
-  
+/* Aligns comment text and username inline */
+.comment-content {
+  display: flex;
+  align-items: baseline;
+  margin-inline: 50px;
+}
 
-  
-  .comment-input mat-form-field {
-    flex-grow: 1;
-    margin-right: 10px;
-  }
+/* Styles for the input field inside the comment section */
+.comment-input mat-form-field {
+  flex-grow: 1;
+  margin-right: 10px;
+}
 
-  .comment-input mat-form-field textarea {
-    height: 100px; /* Augmente la hauteur de l'input */
-    border: none; /* Enlève la bordure */
-    outline: none; /* Enlève l'outline qui peut apparaître lors du focus */
-    box-shadow: none; /* Retire les éventuels effets d'ombre */
-  }
+.comment-input mat-form-field textarea {
+  height: 100px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
 
-  .comment-input {
-    margin: 20px auto; /* Centre horizontalement */
-    display: flex;
-    align-items: center; /* Centre le bouton et l'input verticalement */
-    margin-inline: 3%;
-  }
+/* Centers the comment input and button */
+.comment-input {
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  margin-inline: 3%;
+}
 
-  .comment-input button.mat-icon-button {
-    width: 56px;  /* Ajuste la largeur du bouton */
-    height: 56px; /* Ajuste la hauteur du bouton */
-    background-color: white; /* Couleur de fond pour rendre le bouton plus visible */
-    border-radius: 50%; /* Pour rendre le bouton plus circulaire */
-  }
-  
-  .comment-input mat-icon {
-    font-size: 28px; /* Augmente la taille de l'icône */
-    color: #7B61FF; /* Couleur de l'icône pour qu'elle ressorte sur le fond */
-  }
-  .post-info {
-    display: flex;
-    justify-content: space-between; /* Sépare les éléments avec des espaces égaux */
-    margin-top: 10px; /* Espace au-dessus des colonnes */
-  }
-  
-  .post-info > div {
-    flex-grow: 1; /* Chaque élément prend une part égale de l'espace disponible */
-    text-align: center; /* Centre le texte dans chaque colonne */
-    padding-bottom: 3%;
-  }
-  
-  .post-date, .post-author, .post-topic {
-    margin-right: 20px; /* Ajoute un peu de padding pour l'espacement interne */
-  }
+/* Styles the circular icon button */
+.comment-input button.mat-icon-button {
+  width: 56px;
+  height: 56px;
+  background-color: white;
+  border-radius: 50%;
+}
 
-  .post-header {
-    display: flex;
-    justify-content: auto;
-    align-items: center;
-    margin-bottom: 20px;
-  }
+/* Increases icon size and sets color */
+.comment-input mat-icon {
+  font-size: 28px;
+  color: #7B61FF;
+}
 
-  mat-divider {
-    border-top-color: black;
-    margin: 40px;
-  }
+/* Arranges post info elements evenly */
+.post-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 
-  .username {
-    margin-right: 10px; /* Espace entre le nom d'utilisateur et le commentaire */
-  }
-  
-  .comment-text {
-    background-color: #f5f5f5;
-    padding: 10px 20px 30px;
-    border-radius: 8px;
-    max-width: 80%; /* Limite la largeur du commentaire */
-  }
+/* Ensures equal space and centers text */
+.post-info > div {
+  flex-grow: 1;
+  text-align: center;
+  padding-bottom: 3%;
+}
+
+/* Adds margin to post details */
+.post-date, .post-author, .post-topic {
+  margin-right: 20px;
+}
+
+/* Aligns post header items */
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Sets divider color and margin */
+mat-divider {
+  border-top-color: black;
+  margin: 40px;
+}
+
+/* Spacing between username and comment */
+.username {
+  margin-right: 10px;
+}
+
+/* Styles for the comment box */
+.comment-text {
+  background-color: #f5f5f5;
+  padding: 10px 20px 30px;
+  border-radius: 8px;
+  max-width: 80%;
+}
