@@ -32,6 +32,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Security configuration class for the application.
+ * This class configures HTTP security, JWT authentication, and CORS settings.
+ */
+
 @Configuration // Spring configuration class
 @EnableWebSecurity // Enable the web security in the app
 public class SecurityConfig {
@@ -45,6 +50,14 @@ public class SecurityConfig {
     @Value("${chatop.security.cors.origins}") // Inject the cors origins from the properties file
     private String corsOrigins;
 
+
+    /**
+     * Configures the security filter chain, including JWT, CORS, and session management.
+     *
+     * @param http the HttpSecurity object used to configure the security aspects of the app.
+     * @return the security filter chain.
+     * @throws Exception if an error occurs during configuration.
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable) // Disable the CSRF protection
@@ -78,6 +91,12 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+    /**
+     * Configures CORS to allow requests from specified origins.
+     *
+     * @return a CorsFilter with the appropriate configuration.
+     */
     @Bean
     CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
@@ -99,7 +118,12 @@ public class SecurityConfig {
             }
         };
     }
-
+    
+    /**
+     * Configures the authentication provider to use the user service and password encoder.
+     *
+     * @return the authentication provider.
+     */
     @Bean
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -110,12 +134,24 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+    /**
+     * Provides a BCrypt password encoder.
+     *
+     * @return the password encoder.
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         // Return the BCrypt password encoder
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Provides the authentication manager from the authentication configuration.
+     *
+     * @param authenticationConfiguration the authentication configuration.
+     * @return the authentication manager.
+     * @throws Exception if an error occurs during authentication manager creation.
+     */
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         // Return the auth manager from the config

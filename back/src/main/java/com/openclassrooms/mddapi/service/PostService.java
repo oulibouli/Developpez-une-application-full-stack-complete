@@ -24,6 +24,10 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * Service class for handling post-related operations.
+ * This includes creating, retrieving, and managing posts.
+ */
 @Service
 public class PostService {
     @Autowired
@@ -37,6 +41,12 @@ public class PostService {
     @Autowired
     private SubscriptionRepository subscriptionRepository;
 
+    /**
+     * Retrieve all posts for a user, including posts from their subscribed topics.
+     * 
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing a list of posts.
+     */
     public ResponseEntity<List<PostDTO>> getAllPosts(UserDetails userDetails) {
         try {
             User user = userRepository.findByUsername(userDetails.getUsername())
@@ -57,6 +67,12 @@ public class PostService {
         }
     }
 
+    /**
+     * Retrieve a specific post by its ID.
+     * 
+     * @param id The ID of the post.
+     * @return ResponseEntity containing the post.
+     */
     public ResponseEntity<PostDTO> getPostById(int id) {
         try {
             Post post = postRepository.findById(id)
@@ -67,6 +83,14 @@ public class PostService {
         }
     }
 
+    /**
+     * Create a new post under a specific topic.
+     * 
+     * @param postDTO The post creation data.
+     * @param topicId The ID of the topic.
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing the created post.
+     */
     public ResponseEntity<PostDTO> createPost(PostDTOCreate postDTO, int topicId, UserDetails userDetails) {
         Post post = postMapper.toEntity(postDTO);
         Topic topic = topicRepository.findById(topicId).orElseThrow();

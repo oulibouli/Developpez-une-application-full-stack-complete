@@ -21,6 +21,10 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * Service class for handling topic-related operations.
+ * This includes managing subscriptions and retrieving topics.
+ */
 @Service
 public class TopicService {
     @Autowired
@@ -32,6 +36,12 @@ public class TopicService {
     @Autowired
     private SubscriptionRepository subscriptionRepository;
 
+    /**
+     * Retrieve all topics and indicate whether the user is subscribed to each topic.
+     * 
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing a list of topics with subscription status.
+     */
     public ResponseEntity<List<TopicDTO>> getTopics(UserDetails userDetails) {
         List<Topic> topics = topicRepository.findAll();
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));
@@ -45,6 +55,13 @@ public class TopicService {
         return ResponseEntity.ok(topicDTOs);
     }
 
+    /**
+     * Subscribe a user to a topic.
+     * 
+     * @param topicId The ID of the topic.
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing subscription details.
+     */
     public ResponseEntity<SubscriptionDTO> subscribe(Integer topicId, UserDetails userDetails) {
         SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
         try {
@@ -87,6 +104,13 @@ public class TopicService {
         }
     }
     
+    /**
+     * Unsubscribe a user from a topic.
+     * 
+     * @param topicId The ID of the topic.
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing subscription details.
+     */
     public ResponseEntity<SubscriptionDTO> unsubscribe(Integer topicId, UserDetails userDetails) {
         SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
         try {
@@ -123,6 +147,12 @@ public class TopicService {
         }
     }
 
+    /**
+     * Retrieve the topics that a user is subscribed to.
+     * 
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing a list of subscribed topics.
+     */
     public ResponseEntity<List<TopicDTO>> getSubscriptionsByUser(UserDetails userDetails) {
         try {
             User user = userRepository.findByUsername(userDetails.getUsername())

@@ -8,9 +8,18 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.model.Post;
 
+/**
+ * Mapper class for converting between Post entity and PostDTO.
+ */
 @Component
 public class PostMapper {
 
+    /**
+     * Converts a Post entity to a PostDTO.
+     * 
+     * @param post the Post entity.
+     * @return the PostDTO populated with data from the Post entity.
+     */
     public PostDTO toDto(Post post) {
         PostDTO postDTO = new PostDTO();
         postDTO.setAuthor(post.getUser().getEmail());
@@ -20,6 +29,7 @@ public class PostMapper {
         postDTO.setTitle(post.getTitle());
         postDTO.setTopicName(post.getTopic().getTitle());
 
+        // Map comments from Post to CommentDTO
         List<CommentDTO> commentDTOs = post.getComments().stream().map(comment -> {
             CommentDTO commentDTO = new CommentDTO();
             commentDTO.setId(comment.getId());
@@ -34,6 +44,12 @@ public class PostMapper {
         return postDTO;
     }
 
+    /**
+     * Converts a PostDTOCreate object to a Post entity.
+     * 
+     * @param postDTO the DTO containing post data.
+     * @return the Post entity populated with data from the DTO.
+     */
     public Post toEntity(PostDTOCreate postDTO) {
         Post post = new Post();
         post.setContent(postDTO.getContent());

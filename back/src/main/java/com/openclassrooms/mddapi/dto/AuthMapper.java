@@ -10,6 +10,10 @@ import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.util.StringUtils;
 
+/**
+ * Mapper class for converting between DTOs and user entities.
+ * Handles converting from AuthDTO to User and vice versa.
+ */
 @Component // Annotation for Spring-managed component.
 public class AuthMapper {
 
@@ -22,7 +26,12 @@ public class AuthMapper {
     @Value("${default.role}") // Inject the default role for a new user from the properties file
     private String defaultRole;
 
-    // Converts an AuthDTO object to a Users entity.
+    /**
+     * Converts AuthDTORegister to a User entity.
+     * 
+     * @param authDTO the registration DTO containing user data.
+     * @return the User entity populated with data from the DTO.
+     */
     public User toEntity(AuthDTORegister authDTO) {
         User user = new User();
         user.setEmail(authDTO.getEmail()); // Setting the email from authDTO to Users entity.
@@ -33,6 +42,13 @@ public class AuthMapper {
         return user; // Returning the created Users entity.
     }
     
+    /**
+     * Updates an existing User entity with new data from AuthDTO.
+     * 
+     * @param user the existing User entity.
+     * @param authDTO the DTO containing updated user data.
+     * @return the updated User entity.
+     */
     public User toUpdatedEntity(User user, AuthDTO authDTO) {
         user.setEmail(authDTO.getEmail()); // Setting the email from authDTO to Users entity.
         user.setUsername(authDTO.getUsername()); // Setting the name from authDTO to Users entity.
@@ -43,7 +59,12 @@ public class AuthMapper {
         return user; // Returning the created Users entity.
     }
 
-    // Converts a UserDetails object to an AuthDTO object.
+    /**
+     * Converts UserDetails to an AuthDTO object.
+     * 
+     * @param userDetails the UserDetails object representing an authenticated user.
+     * @return the AuthDTO populated with user data.
+     */
     public AuthDTO toDTO(UserDetails userDetails) {
         AuthDTO authDTO = new AuthDTO();
         try {

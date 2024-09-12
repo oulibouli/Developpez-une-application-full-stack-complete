@@ -20,6 +20,10 @@ import com.openclassrooms.mddapi.util.StringUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * Service class for handling comment-related operations.
+ * This includes creating and managing comments.
+ */
 @Service
 public class CommentService {
 
@@ -32,6 +36,14 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
+    /**
+     * Method to create a new comment on a post.
+     * 
+     * @param commentDTOCreate The comment creation data.
+     * @param postId The ID of the post.
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing the created comment.
+     */
     public ResponseEntity<CommentDTO> createComment(CommentDTOCreate commentDTOCreate, int postId, UserDetails userDetails) {
         try {
             User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));

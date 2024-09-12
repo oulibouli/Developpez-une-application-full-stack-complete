@@ -12,8 +12,10 @@ import com.openclassrooms.mddapi.dto.UserMapper;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
-
-
+/**
+ * Service class for managing user details and authentication.
+ * Implements Spring Security's UserDetailsService interface.
+ */
 @Service
 public class UserService implements UserDetailsService {
 
@@ -25,7 +27,13 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserMapper userMapper;
     
-    // Request a user by username (email)
+    /**
+     * Load a user by their username or email for authentication purposes.
+     * 
+     * @param identifier The username or email of the user.
+     * @return UserDetails containing the user's information.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     @Override
     public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
         // Get the user by email from the repo / Return an exception if not found

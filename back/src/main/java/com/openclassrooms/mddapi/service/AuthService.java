@@ -23,7 +23,10 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.util.JwtUtil;
 import com.openclassrooms.mddapi.util.StringUtils;
 
-
+/**
+ * Service class for handling authentication-related operations.
+ * This includes user registration, login, and user profile management.
+ */
 @Service
 public class AuthService {
     
@@ -43,7 +46,12 @@ public class AuthService {
     @Autowired
     private AuthMapper authMapper;
 
-    // Method for user signup
+    /**
+     * Method for user registration.
+     * 
+     * @param authDTO The user registration data.
+     * @return ResponseEntity with user data and JWT token if successful.
+     */
     public ResponseEntity<AuthDTO> signUp(AuthDTORegister authDTO) {
         AuthDTO response = new AuthDTO();
         try {
@@ -77,7 +85,12 @@ public class AuthService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // Method for user signin
+    /**
+     * Method for user login.
+     * 
+     * @param authDTO The user login data.
+     * @return ResponseEntity with JWT token if successful.
+     */
     public ResponseEntity<AuthDTO> signIn(AuthDTOLogin authDTO) {
         AuthDTO response = new AuthDTO();
         try {
@@ -113,7 +126,12 @@ public class AuthService {
        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // Method to get the user profile based on user details
+    /**
+     * Method for fetching the logged-in user's profile.
+     * 
+     * @param userDetails The authenticated user's details.
+     * @return ResponseEntity containing the user profile.
+     */
     public ResponseEntity<AuthDTO> getUserProfile(UserDetails userDetails) {
         AuthDTO response = new AuthDTO();
         try {
@@ -127,6 +145,13 @@ public class AuthService {
         }
     }
 
+    /**
+     * Method for updating user profile information.
+     * 
+     * @param userDetails The authenticated user's details.
+     * @param authDTO The updated user data.
+     * @return ResponseEntity with a success message.
+     */
     public ResponseEntity<Map<String, Object>> updateUserProfile(UserDetails userDetails, AuthDTO authDTO) {   
         try {
             User user = userRepository.findByUsername(userDetails.getUsername())

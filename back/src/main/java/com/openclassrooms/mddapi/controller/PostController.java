@@ -17,22 +17,45 @@ import com.openclassrooms.mddapi.dto.PostDTO;
 import com.openclassrooms.mddapi.dto.PostDTOCreate;
 import com.openclassrooms.mddapi.service.PostService;
 
+/**
+ * REST controller for managing posts.
+ */
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
     @Autowired
     private PostService postService;
 
+    /**
+     * Retrieves all posts visible to the authenticated user.
+     *
+     * @param userDetails the authenticated user.
+     * @return a list of posts.
+     */
     @GetMapping("")
     public ResponseEntity<List<PostDTO>> getAllPosts(@AuthenticationPrincipal UserDetails userDetails) {
         return postService.getAllPosts(userDetails);
     }
 
+    /**
+     * Retrieves a specific post by ID.
+     *
+     * @param id the ID of the post.
+     * @return the post details.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPostById(@PathVariable int id) {
         return postService.getPostById(id);
     }
 
+    /**
+     * Creates a new post for a specific topic.
+     *
+     * @param postDTO the post details.
+     * @param id the topic ID.
+     * @param userDetails the authenticated user creating the post.
+     * @return the created post.
+     */
     @PostMapping("/{id}")
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTOCreate postDTO, @PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
         return postService.createPost(postDTO, id, userDetails);

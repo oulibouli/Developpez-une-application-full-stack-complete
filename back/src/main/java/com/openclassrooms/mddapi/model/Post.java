@@ -17,6 +17,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a Post.
+ * A Post can have multiple comments associated with it.
+ */
 @Entity
 @Data
 @Builder

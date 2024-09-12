@@ -11,6 +11,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a Subscription.
+ * A Subscription links a User to a Topic and tracks if the subscription is active.
+ */
 @Entity
 @Data
 @AllArgsConstructor

@@ -8,6 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a Topic.
+ * A Topic has a title and a description.
+ */
 @Entity
 @Data
 @AllArgsConstructor

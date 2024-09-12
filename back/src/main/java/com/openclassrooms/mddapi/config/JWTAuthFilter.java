@@ -22,6 +22,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * JWTAuthFilter class is responsible for filtering incoming HTTP requests
+ * to validate the JWT token and set authentication details in the security context.
+ */
+
 // Annotation : Spring component
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
@@ -34,7 +39,15 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     @Autowired
     private UserService usersService;
 
-    // Main method requested for each HTTP request
+    /**
+     * This method filters each incoming HTTP request to check for a valid JWT token.
+     *
+     * @param request the incoming HttpServletRequest
+     * @param response the outgoing HttpServletResponse
+     * @param filterChain the filter chain for further filtering
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs during filtering
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -65,6 +78,12 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Processes the provided JWT token by validating it and setting user authentication details.
+     *
+     * @param jwtToken the JWT token from the request
+     * @param request the HttpServletRequest object
+     */
     private void processJwtToken(String jwtToken, HttpServletRequest request) {
         // Extract the username from the JWT token
         String userEmail = jwtUtil.extractUsername(jwtToken);

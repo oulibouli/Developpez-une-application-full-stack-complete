@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 
 import lombok.Data;
 
+/**
+ * DTO for representing comment data.
+ * Contains information such as author, description, date, and post title.
+ */
 @Data
 public class CommentDTO {
     private int id;

@@ -21,7 +21,9 @@ import com.openclassrooms.mddapi.service.AuthService;
 
 import jakarta.validation.Valid;
 
-// Define this class as a REST controller
+/**
+ * REST controller for managing user authentication (registration, login, and profile management).
+ */
 @RestController
 @Validated
 // Define the basic url for the authentication requests
@@ -32,24 +34,49 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    /**
+     * Registers a new user.
+     *
+     * @param signUpRequest the registration details.
+     * @return the registered user's authentication details.
+     */
     @PostMapping("/register")
     public ResponseEntity<AuthDTO> signUp(@Valid @RequestBody AuthDTORegister signUpRequest) {
         // Call the auth service to register a new user
         return authService.signUp(signUpRequest);
     }
 
+    /**
+     * Authenticates a user based on login credentials.
+     *
+     * @param signInRequest the login credentials.
+     * @return the authenticated user's details and JWT.
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthDTO> signIn(@RequestBody AuthDTOLogin signInRequest) {
         // Call the auth service to connect a user
         return authService.signIn(signInRequest);
     }
 
+    /**
+     * Retrieves the profile of the authenticated user.
+     *
+     * @param userDetails the current authenticated user.
+     * @return the authenticated user's profile.
+     */
     @GetMapping("/me")
     public ResponseEntity<AuthDTO> getUserProfile(@Valid @AuthenticationPrincipal UserDetails userDetails) {
         // Call the auth service to request the connected user
         return authService.getUserProfile(userDetails);
     }
 
+    /**
+     * Updates the profile of the authenticated user.
+     *
+     * @param userDetails the current authenticated user.
+     * @param authDTO the updated profile details.
+     * @return a success message.
+     */
     @PutMapping("/update")
     public ResponseEntity<Map<String, Object>> updateUserProfile(@AuthenticationPrincipal UserDetails userDetails, @RequestBody AuthDTO authDTO) {
         return authService.updateUserProfile(userDetails, authDTO);

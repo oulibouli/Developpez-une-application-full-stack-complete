@@ -14,6 +14,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+/**
+ * Entity class representing a User in the system.
+ * Implements Spring Security's UserDetails interface for authentication and authorization purposes.
+ */
 @Entity
 @Data
 public class User implements UserDetails {

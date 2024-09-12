@@ -13,6 +13,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a Comment on a Post.
+ */
 @Entity
 @Data
 @Builder

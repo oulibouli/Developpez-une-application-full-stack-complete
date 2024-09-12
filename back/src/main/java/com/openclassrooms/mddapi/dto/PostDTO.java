@@ -9,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * DTO for representing a Post.
+ * Contains post details such as title, topic name, content, author, and comments.
+ */
 @Data
 @JsonIgnoreProperties(ignoreUnknown= true)
 @JsonInclude(JsonInclude.Include.NON_NULL) // Don't include null values in the json response

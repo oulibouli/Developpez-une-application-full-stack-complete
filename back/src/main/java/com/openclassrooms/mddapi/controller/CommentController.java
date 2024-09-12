@@ -14,14 +14,24 @@ import com.openclassrooms.mddapi.dto.CommentDTO;
 import com.openclassrooms.mddapi.dto.CommentDTOCreate;
 import com.openclassrooms.mddapi.service.CommentService;
 
+/**
+ * REST controller for managing comments on posts.
+ */
 @RestController
 @RequestMapping("/api/comment")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
-    
 
+    /**
+     * Creates a comment on a specific post.
+     *
+     * @param commentDTOCreate the comment details.
+     * @param postId the ID of the post.
+     * @param userDetails the authenticated user creating the comment.
+     * @return the created comment.
+     */
     @PostMapping("/{postId}")
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTOCreate commentDTOCreate, @PathVariable int postId, @AuthenticationPrincipal UserDetails userDetails) {
         System.out.println(commentDTOCreate);
