@@ -13,9 +13,10 @@
                 <input matInput type="text" id="title" formControlName="title" placeholder="Titre de l'article">
             </mat-form-field>
 
-            <mat-form-field class="form-group" appearance="outline">
-                <input matInput type="text" id="content" formControlName="content" placeholder="Contenu de l'article">
-            </mat-form-field>
+     
+            <mat-form-field appearance="outline" class="custom-infix-padding">
+                <textarea matInput formControlName="content" placeholder="Contenu de l'article" rows="10"></textarea>
+              </mat-form-field>
     
             <button mat-stroked-button class="button" type="submit" [disabled]="createForm.invalid">
             Créer
