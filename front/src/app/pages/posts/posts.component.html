@@ -13,7 +13,7 @@
       <mat-card *ngFor="let post of posts" class="post-card" (click)="openPost(post.id)">
         <mat-card-title>{{ post.title }}</mat-card-title>
         <mat-card-subtitle>
-          {{ post.date | date }} &nbsp;&nbsp; Auteur: {{ post.author }}
+          {{ post.topicName }}&nbsp;&nbsp; {{ post.date | date:'dd/MM/yyyy HH:mm' }} &nbsp;&nbsp; {{ post.author }}
         </mat-card-subtitle>
         <mat-card-content>
           <p>{{ post.content | slice:0:200 }}...</p>
