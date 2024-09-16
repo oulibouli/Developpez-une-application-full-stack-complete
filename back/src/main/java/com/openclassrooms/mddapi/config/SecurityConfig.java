@@ -70,7 +70,9 @@ public class SecurityConfig {
             .requestMatchers(
                 "/api/auth/login",
                 "/api/auth/register",
-                "/images/**"
+                "/images/**",
+                "/v3/api-docs/**",
+                "/swagger-ui/**"
             ).permitAll()
             .requestMatchers(
                 "/api/topic/**",
