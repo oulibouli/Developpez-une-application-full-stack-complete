@@ -9,6 +9,7 @@ import { MeComponent } from './pages/me/me.component';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PostCreateComponent } from './pages/post-create/post-create.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 // Guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
   { path: 'posts/:id', component: PostDetailComponent, canActivate: [AuthGuard] },
   { path: 'post', component: PostCreateComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

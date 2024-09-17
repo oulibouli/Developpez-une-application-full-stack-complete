@@ -28,6 +28,7 @@ import { PostCreateComponent } from './pages/post-create/post-create.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MatListModule } from '@angular/material/list';
     BackButtonComponent, 
     MeComponent,
     PostDetailComponent,
-    PostCreateComponent
+    PostCreateComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
