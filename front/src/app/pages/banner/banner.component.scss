@@ -10,6 +10,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
 }
 
 /* Alignment of content to the left (logo) */
@@ -35,6 +39,7 @@
   padding: 20px;
   transform: translateX(100%);
   transition: transform 0.3s ease;
+  display: none;
 }
   
 /* Icon style */
