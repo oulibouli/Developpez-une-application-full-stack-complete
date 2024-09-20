@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -18,9 +19,12 @@ import lombok.Data;
 public class AuthDTOLogin {
 
     @Email(message = "Email should be valid")
+    @JsonIgnore()
     private String email;
     @NotNull(message = "Cannot be null")
-    private String password;
-    private String username;
     private String identifier;
+    @NotNull(message = "Cannot be null")
+    private String password;
+    @JsonIgnore()
+    private String username;
 }
